@@ -2,7 +2,7 @@ this application is mobile part of system for brige turnamert
 
 # Screens in applicanion plan:
 
-[photo of screen structure](diagrams/screens.svg)
+![photo of screen structure](diagrams/screens.svg)
 
 
 # Getting Started
