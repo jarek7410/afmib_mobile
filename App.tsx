@@ -10,6 +10,13 @@ import { RootStackParamList } from './screens/rootStats.ts';
 import { useState } from 'react';
 import { RegisterScreen } from './screens/befor_login';
 import { CodeJoinScreen } from './screens/CodeJoinScreen.tsx';
+import { InputPlayerScreen } from './screens/InputPlayerScreen.tsx';
+import { SummaryScreen } from './screens/turnament/SummaryScreen.tsx';
+import { InfoReceiverScreen } from './screens/turnament/InfoReciverScreen.tsx';
+import { MovementScreen } from './screens/turnament/MovementScreen.tsx';
+import { InputDataScreen } from './screens/turnament/InputDataScreen.tsx';
+import { AppSettingScreen } from './screens/settings/AppSettingScreen.tsx';
+import { Button } from 'react-native';
 
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // const Stack = createNativeStackNavigator();
@@ -19,14 +26,41 @@ function App() {
   const [login, setLogin] = useState(false);
   const loginToApp = () => {
     console.log('login');
-    setLogin(true);
+    setLogin(!login);
   };
   return (
     <NavigationContainer>
       {login ? (
         <Stack.Navigator initialRouteName={screen.Home}>
-          <Stack.Screen name={screen.Home} component={HomeScreen} />
+          <Stack.Screen
+            name={screen.Home}
+            options={({ navigation }) => ({
+              headerRight: () => (
+                <Button
+                  title={'Setting'}
+                  onPress={() => navigation.navigate(screen.Settings)}
+                />
+              ),
+            })}
+            component={HomeScreen}
+          />
           <Stack.Screen name={screen.CodeJoin} component={CodeJoinScreen} />
+          <Stack.Screen
+            name={screen.InputPlayer}
+            component={InputPlayerScreen}
+          />
+          <Stack.Screen name={screen.Summary} component={SummaryScreen} />
+          <Stack.Screen
+            name={screen.InfoReceiver}
+            component={InfoReceiverScreen}
+          />
+          <Stack.Screen name={screen.Movement} component={MovementScreen} />
+          <Stack.Screen name={screen.InputData} component={InputDataScreen} />
+          <Stack.Screen
+            name={screen.Settings}
+            component={AppSettingScreen}
+            initialParams={{ login: loginToApp }}
+          />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator initialRouteName={screen.Login}>

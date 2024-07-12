@@ -15,7 +15,7 @@ export const LoginScreen = ({ navigation, route }: Props) => {
         onPress={() => {
           // navigation.navigate(screen.Home);
           route.params.login();
-          navigation.navigate(screen.Home);
+          // navigation.navigate(screen.Home);
         }}
       />
       <Button

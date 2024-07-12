@@ -3,7 +3,7 @@ export type RootStackParamList = {
   Login: { login: () => void };
   Register: undefined;
   CodeJoin: undefined;
-  Settings: undefined;
+  Settings:  { login: () => void };
   InputPlayer: undefined;
   Summary: undefined;
   InfoReceiver: undefined;
