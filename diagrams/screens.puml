@@ -29,11 +29,6 @@ state D as "turnament"{
    state D2 as "movment"
    state D3 as "input data"
 }
-state D as "turnament"{
-   state D1 as "info recive"
-   state D2 as "movment"
-   state D3 as "input data"
-}
 
 
 
