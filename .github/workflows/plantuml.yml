@@ -1,16 +1,19 @@
-name: Draw diagrams
-on: push
-
+name: generate plantuml
+on:
+  push:
+    branches:
+      - master
 jobs:
-  diagrams:
-    name: Draw diagrams
+  generate_plantuml:
     runs-on: ubuntu-latest
+    name: plantuml
     steps:
-      - name: Check out repository
+      - name: checkout
         uses: actions/checkout@v2
-      - name: Process diagrams
-        uses: Timmy/plantuml-action@v1
+      - name: plantuml
+        id: plantuml
+        uses: grassedge/generate-plantuml-action@master
         with:
-          args: 'diagrams/*.puml'
-      # - name: Display diagrams
-      #   run: cat diagrams/*.utxt
+          path: diagrams
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
