@@ -3,6 +3,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'diagrams/*.puml'
+      - 'diagrams/*.pu'
+      - 'diagrams/*.pml'
+      - 'diagrams/*.plantuml'
   workflow_dispatch: 
 jobs:
   generate_plantuml:
