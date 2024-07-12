@@ -4,4 +4,9 @@ export enum screen {
   Register = 'Register',
   CodeJoin = 'CodeJoin',
   Settings = 'Settings',
+  InputPlayer = 'InputPlayer',
+  Summary = 'Summary',
+  InfoReceiver = 'InfoReceiver',
+  Movement = 'Movement',
+  InputData = 'InputData',
 }
