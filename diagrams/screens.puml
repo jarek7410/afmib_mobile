@@ -25,9 +25,16 @@ C -> B1
  A3 ->A1
  D --> A1 : exit tournament
 state D as "turnament"{
+   state D0 as "summary"
    state D1 as "info recive"
    state D2 as "movment"
    state D3 as "input data"
+   D0 --> D1
+   D0 --> D2
+   D0 --> D3
+   D0 <-- D1
+   D0 <-- D2
+   D0 <-- D3
 }
 
 
