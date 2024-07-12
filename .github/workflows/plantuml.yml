@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch: 
 jobs:
   generate_plantuml:
     runs-on: ubuntu-latest
