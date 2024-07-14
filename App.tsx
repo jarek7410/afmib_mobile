@@ -1,43 +1,72 @@
 // In App.js in a new project
 
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { HomeScreen } from './screens/HomeScreen.tsx';
-import { screen } from './enum/screen.ts';
-import { LoginScreen } from './screens/befor_login';
-import { createStackNavigator } from '@react-navigation/stack';
-import { RootStackParamList } from './screens/rootStats.ts';
-import { useState } from 'react';
-import { RegisterScreen } from './screens/befor_login';
-import { CodeJoinScreen } from './screens/CodeJoinScreen.tsx';
-import { InputPlayerScreen } from './screens/InputPlayerScreen.tsx';
-import { SummaryScreen } from './screens/turnament/SummaryScreen.tsx';
-import { InfoReceiverScreen } from './screens/turnament/InfoReciverScreen.tsx';
-import { MovementScreen } from './screens/turnament/MovementScreen.tsx';
-import { InputDataScreen } from './screens/turnament/InputDataScreen.tsx';
-import { AppSettingScreen } from './screens/settings/AppSettingScreen.tsx';
-import { Button } from 'react-native';
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { HomeScreen } from "./screens/HomeScreen.tsx";
+import { screen } from "./enum/screen.ts";
+import { LoginScreen } from "./screens/befor_login";
+import { createStackNavigator } from "@react-navigation/stack";
+import { RootStackParamList } from "./screens/rootStats.ts";
+import { useEffect, useState } from "react";
+import { RegisterScreen } from "./screens/befor_login";
+import { CodeJoinScreen } from "./screens/CodeJoinScreen.tsx";
+import { InputPlayerScreen } from "./screens/InputPlayerScreen.tsx";
+import { SummaryScreen } from "./screens/turnament/SummaryScreen.tsx";
+import { InfoReceiverScreen } from "./screens/turnament/InfoReciverScreen.tsx";
+import { MovementScreen } from "./screens/turnament/MovementScreen.tsx";
+import { InputDataScreen } from "./screens/turnament/InputDataScreen.tsx";
+import { AppSettingScreen } from "./screens/settings/AppSettingScreen.tsx";
+import { Button } from "react-native";
+import { GetJWT } from "./storage/login.ts";
+import { LoadingScreen } from "./screens/LoadingScreen.tsx";
 
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // const Stack = createNativeStackNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
 
 function App() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    GetJWT().then(jwt => {
+      if (jwt != null) {
+        setLogin(true);
+      } else {
+        setLogin(false);
+      }
+    });
+  }, []);
+
   const loginToApp = () => {
-    console.log('login');
-    setLogin(!login);
+    console.log("logout");
+    setLogin(false);
+  };
+  const loginAction = async () => {
+    if ((await GetJWT()) != null) {
+      setLogin(true);
+    } else {
+      console.log("App,loginActin: no jwt");
+    }
   };
   return (
     <NavigationContainer>
-      {login ? (
+      {login === null && (
+        <Stack.Navigator>
+          <Stack.Screen
+            name={screen.Loading}
+            component={LoadingScreen}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      )}
+      {login === true && (
         <Stack.Navigator initialRouteName={screen.Home}>
           <Stack.Screen
             name={screen.Home}
             options={({ navigation }) => ({
               headerRight: () => (
                 <Button
-                  title={'Setting'}
+                  title={"Setting"}
                   onPress={() => navigation.navigate(screen.Settings)}
                 />
               ),
@@ -62,14 +91,20 @@ function App() {
             initialParams={{ login: loginToApp }}
           />
         </Stack.Navigator>
-      ) : (
+      )}
+      {login === false && (
         <Stack.Navigator initialRouteName={screen.Login}>
           <Stack.Screen
             name={screen.Login}
             component={LoginScreen}
-            initialParams={{ login: loginToApp }}
+            initialParams={{ login: loginAction }}
           />
           <Stack.Screen name={screen.Register} component={RegisterScreen} />
+          <Stack.Screen
+            name={screen.Loading}
+            options={{ headerShown: false }}
+            component={LoadingScreen}
+          />
         </Stack.Navigator>
       )}
     </NavigationContainer>

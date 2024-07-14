@@ -1,8 +1,9 @@
-import React from 'react';
-import { Button, Text, View } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../rootStats.ts';
-import { screen } from '../../enum/screen.ts';
+import React from "react";
+import { Button, Text, View } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../rootStats.ts";
+import { screen } from "../../enum/screen.ts";
+import { setLoginData } from "../../storage/login.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Settings>;
 
@@ -12,15 +13,16 @@ export const AppSettingScreen = ({ navigation, route }: Props) => {
       <View>
         <Text>input data</Text>
         <Button
-          title={'go back'}
+          title={"go back"}
           onPress={() => {
             navigation.goBack();
           }}
         />
         <Button
-          title={'logout'}
+          title={"logout"}
           onPress={() => {
             route.params.login();
+            setLoginData({ jwt: "", name: "", email: "" });
           }}
         />
       </View>
