@@ -6,7 +6,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Spacer from "../../components/spacer";
 import { Colors } from "../../styles/Colors.ts";
 import Text from "../../components/Text";
-import { LoginRegisterStyle } from "../../styles/loginRegisterStyle.ts";
+import { style } from "../../styles/loginRegisterStyle.ts";
 import { setLoginData } from "../../storage/login.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Login>;
@@ -32,7 +32,7 @@ export const LoginScreen = ({ navigation, route }: Props) => {
       <Text>Register: not jest hash</Text>
       {/*TODO: hash password!!!!, validate email, validate password*/}
       <TextInput
-        style={LoginRegisterStyle.TextInput}
+        style={style.TextInput}
         value={username}
         onChangeText={setUsername}
         placeholder={"username"}
@@ -40,12 +40,14 @@ export const LoginScreen = ({ navigation, route }: Props) => {
         returnKeyType="next"
         onSubmitEditing={() => passwordInput.current?.focus()}
         blurOnSubmit={false}
+        autoCapitalize={"none"}
       />
       <TextInput
-        style={LoginRegisterStyle.TextInput}
+        style={style.TextInput}
         placeholder={"password"}
         onChangeText={setPassword}
         value={password}
+        autoCapitalize={"none"}
         secureTextEntry
         ref={passwordInput}
         blurOnSubmit={true}

@@ -3,7 +3,7 @@ import { Button, Text, TextInput, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { screen } from "../../enum/screen.ts";
 import { RootStackParamList } from "../rootStats.ts";
-import { LoginRegisterStyle } from "../../styles/loginRegisterStyle.ts";
+import { style } from "../../styles/loginRegisterStyle.ts";
 import { Colors } from "../../styles/Colors.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Register>;
@@ -29,21 +29,22 @@ export const RegisterScreen = ({ navigation }: Props) => {
       />
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <TextInput
-          style={LoginRegisterStyle.TextInput}
+          style={style.TextInput}
           value={username}
           onChangeText={setUsername}
           placeholder={"username"}
           autoFocus={true}
+          autoCapitalize={"none"}
           returnKeyType="next"
           onSubmitEditing={() => emailInput.current?.focus()}
           blurOnSubmit={false}
         />
         <TextInput
-          style={LoginRegisterStyle.TextInput}
+          style={style.TextInput}
           placeholder={"email"}
           onChangeText={setEmail}
           value={email}
-          // secureTextEntry
+          autoCapitalize={"none"}
           ref={emailInput}
           returnKeyType="next"
           onSubmitEditing={() => passwordInput.current?.focus()}
@@ -51,9 +52,10 @@ export const RegisterScreen = ({ navigation }: Props) => {
         />
 
         <TextInput
-          style={LoginRegisterStyle.TextInput}
+          style={style.TextInput}
           placeholder={"password"}
           onChangeText={setPassword}
+          autoCapitalize={"none"}
           value={password}
           secureTextEntry
           ref={passwordInput}
