@@ -36,6 +36,11 @@ state D as "turnament"{
    D0 <-- D2
    D0 <-- D3
 }
+state E as "admin"{
+    state E1 as "Edit input data"
+    state E2 as "Edit user data"
+}
+A1 --> E :only for "admin"
 
 
 
