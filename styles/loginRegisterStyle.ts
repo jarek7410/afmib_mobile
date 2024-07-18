@@ -9,5 +9,12 @@ export const style = StyleSheet.create({
     borderColor: Colors.text,
     borderWidth: 1,
     borderRadius: 10,
+    margin: 5,
+  },
+  centralizeContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.background,
   },
 });

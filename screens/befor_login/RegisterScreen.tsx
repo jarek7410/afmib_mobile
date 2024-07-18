@@ -65,6 +65,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
             onChangeText={setEmail}
             value={email}
             autoCapitalize={"none"}
+            inputMode={"email"}
             ref={emailInput}
             returnKeyType="next"
             onSubmitEditing={() => passwordInput.current?.focus()}
