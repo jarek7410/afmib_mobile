@@ -1,7 +1,7 @@
 export interface loginDTO {
   email: string | undefined;
   name: string;
-  jwt: string;
+  token: string;
 }
 export interface codejoinDTO {
   code: string;

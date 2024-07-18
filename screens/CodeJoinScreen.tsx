@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 import { RootStackParamList } from "./rootStats.ts";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { screen } from "../enum/screen.ts";
 import { style } from "../styles/codeJoinSytle.ts";
 import { saveCodeJoin } from "../storage/codeJoin.ts";
+import Button from "../components/Button";
+import { Colors } from "../styles/Colors.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.CodeJoin>;
 
@@ -61,10 +63,10 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
     <View
       style={{
         flex: 1,
+        backgroundColor: Colors.background,
         justifyContent: "center",
         alignItems: "center",
       }}>
-      <Text>Code Join Screen</Text>
       <View style={{ flexDirection: "row" }}>
         <TextInput
           style={style.TextInput}
@@ -157,7 +159,6 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
         />
       </View>
       <Button title={"join"} onPress={codeJoin} />
-      <Button title={"goBack"} onPress={() => navigation.goBack()} />
     </View>
   );
 };

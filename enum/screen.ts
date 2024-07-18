@@ -10,4 +10,5 @@ export enum screen {
   Movement = "Movement",
   InputData = "InputData",
   Loading = "Loading",
+  Tournament = "Tournament",
 }

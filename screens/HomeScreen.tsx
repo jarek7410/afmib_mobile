@@ -1,9 +1,12 @@
-import { Button, Text, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import React, { useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./rootStats.ts";
 import { screen } from "../enum/screen.ts";
 import { GetJWT, GetLoginData } from "../storage/login.ts";
+import Text from "../components/Text/index.ts";
+import Button from "../components/Button";
+import { Colors } from "../styles/Colors.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Home>;
 
@@ -23,11 +26,11 @@ export const HomeScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <View>
+    <SafeAreaView style={{ flex: 1 }}>
       <View
         style={{
           alignContent: "center",
-          backgroundColor: "black",
+          backgroundColor: Colors.background,
           justifyContent: "center",
         }}>
         <Text>{text}</Text>
@@ -37,6 +40,6 @@ export const HomeScreen = ({ navigation }: Props) => {
           onPress={() => navigation.push(screen.CodeJoin)}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };

@@ -1,13 +1,13 @@
-import { Button, TextInput, View } from "react-native";
+import { SafeAreaView, TextInput } from "react-native";
 import React, { useRef } from "react";
 import { screen } from "../../enum/screen.ts";
 import { RootStackParamList } from "../rootStats.ts";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Spacer from "../../components/spacer";
 import { Colors } from "../../styles/Colors.ts";
-import Text from "../../components/Text";
 import { style } from "../../styles/loginRegisterStyle.ts";
-import { setLoginData } from "../../storage/login.ts";
+import { getServerURL, setLoginData } from "../../storage/login.ts";
+import Button from "../../components/Button";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Login>;
 
@@ -17,19 +17,33 @@ export const LoginScreen = ({ navigation, route }: Props) => {
   const [password, setPassword] = React.useState<string>("");
   const login = async () => {
     console.log("login");
-    setLoginData({ email: undefined, name: username, jwt: "aaaa" }).then(() => {
-      route.params.login();
+    const response = await fetch((await getServerURL()) + "auth/user/login/", {
+      method: "POST",
+      headers: {
+        // Authorization: `Bearer ${get}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    });
+    if (!response.ok) {
+      console.log("login failed");
+      return;
+    }
+    const data = await response.json();
+    console.log(data);
+    const token = data.token;
+    setLoginData({ email: undefined, name: username, token }).then(() => {
+      route.params.logout();
     });
   };
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: Colors.background,
       }}>
-      <Text>Register: not jest hash</Text>
       {/*TODO: hash password!!!!, validate email, validate password*/}
       <TextInput
         style={style.TextInput}
@@ -52,15 +66,15 @@ export const LoginScreen = ({ navigation, route }: Props) => {
         ref={passwordInput}
         blurOnSubmit={true}
         returnKeyType="send"
+        onSubmitEditing={login}
       />
       <Spacer height={50} />
 
       <Button onPress={login} title={"Login"} />
-
       <Button
         title={"register"}
         onPress={() => navigation.push(screen.Register)}
       />
-    </View>
+    </SafeAreaView>
   );
 };
