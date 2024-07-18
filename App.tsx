@@ -16,7 +16,7 @@ import { InfoReceiverScreen } from "./screens/turnament/InfoReciverScreen.tsx";
 import { MovementScreen } from "./screens/turnament/MovementScreen.tsx";
 import { InputDataScreen } from "./screens/turnament/InputDataScreen.tsx";
 import { AppSettingScreen } from "./screens/settings/AppSettingScreen.tsx";
-import { GetToken } from "./storage/login.ts";
+import { getToken } from "./storage/login.ts";
 import { LoadingScreen } from "./screens/LoadingScreen.tsx";
 import Button from "./components/Button";
 import Text from "./components/Text/index.ts";
@@ -30,7 +30,7 @@ function App() {
   const [login, setLogin] = useState<boolean | null>(null);
 
   useEffect(() => {
-    GetToken().then(jwt => {
+    getToken().then(jwt => {
       if (jwt != null) {
         setLogin(true);
       } else {
@@ -44,7 +44,7 @@ function App() {
     setLogin(false);
   };
   const loginAction = async () => {
-    if ((await GetToken()) != null) {
+    if ((await getToken()) != null) {
       setLogin(true);
     } else {
       console.log("App,loginActin: no jwt");
