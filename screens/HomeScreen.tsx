@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./rootStats.ts";
 import { screen } from "../enum/screen.ts";
-import { GetJWT, GetLoginData } from "../storage/login.ts";
+import { getServerURL, getToken } from "../storage/login.ts";
 import Text from "../components/Text/index.ts";
 import Button from "../components/Button";
 import { Colors } from "../styles/Colors.ts";
@@ -13,17 +13,27 @@ type Props = NativeStackScreenProps<RootStackParamList, screen.Home>;
 export const HomeScreen = ({ navigation }: Props) => {
   const [text, setText] = React.useState<string>("");
   useEffect(() => {
+    const getMyObjects = async () => {
+      try {
+        const response = await fetch((await getServerURL()) + "api/me", {
+          headers: {
+            Authorization: "Bearer " + (await getToken()),
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          console.log("HomeScreen: getMyObjects: response not ok");
+          return;
+        }
+        const jsonValue = await response.json();
+        setText(JSON.stringify(jsonValue));
+      } catch (e) {
+        // read error
+      }
+      console.log("Done.");
+    };
     getMyObjects();
   }, []);
-  const getMyObjects = async () => {
-    try {
-      const jsonValue = (await GetJWT()) + JSON.stringify(await GetLoginData());
-      setText(jsonValue);
-    } catch (e) {
-      // read error
-    }
-    console.log("Done.");
-  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
