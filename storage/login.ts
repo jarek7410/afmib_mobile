@@ -5,11 +5,11 @@ export const setLoginData = async (login: loginDTO): Promise<void> => {
   await AsyncStorage.setItem("@login", JSON.stringify(login));
   await AsyncStorage.setItem("@token", login.token);
 };
-export const GetLoginData = async (): Promise<loginDTO | null> => {
+export const getLoginData = async (): Promise<loginDTO | null> => {
   const login = await AsyncStorage.getItem("@login");
   return login != null ? JSON.parse(login) : null;
 };
-export const GetToken = async (): Promise<string | null> => {
+export const getToken = async (): Promise<string | null> => {
   return await AsyncStorage.getItem("@token");
 };
 export const getServerURL = async (): Promise<string> => {

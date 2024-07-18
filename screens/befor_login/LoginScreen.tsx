@@ -33,7 +33,7 @@ export const LoginScreen = ({ navigation, route }: Props) => {
     console.log(data);
     const token = data.token;
     setLoginData({ email: undefined, name: username, token }).then(() => {
-      route.params.logout();
+      route.params.login();
     });
   };
   return (
