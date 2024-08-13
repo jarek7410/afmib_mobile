@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, TextInput } from "react-native";
 import { RootStackParamList } from "./rootStats.ts";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -7,6 +7,12 @@ import { style } from "../styles/codeJoinSytle.ts";
 import { saveCodeJoin } from "../storage/codeJoin.ts";
 import Button from "../components/Button";
 import { Colors } from "../styles/Colors.ts";
+import {
+  Camera,
+  useCameraDevice,
+  useCameraPermission,
+  useCodeScanner,
+} from "react-native-vision-camera";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.CodeJoin>;
 
@@ -27,7 +33,63 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
   const [code5, setCode5] = React.useState<string>("");
   const [code6, setCode6] = React.useState<string>("");
   const [code7, setCode7] = React.useState<string>("");
-  const [code8, setCode8] = React.useState<string>("");
+  const [code8, setCode8] = useState<string>("");
+
+  const { hasPermission, requestPermission } = useCameraPermission();
+  const [cameraIsActive, setCameraIsActive] = useState<boolean>(true);
+  useEffect(() => {
+    if (!hasPermission) {
+      requestPermission().then(bo => {
+        if (!bo) {
+          console.log("break app... I need camera permission");
+        }
+      });
+    }
+  }, [hasPermission, requestPermission]);
+  const device = useCameraDevice("back");
+  const codeScanner = useCodeScanner({
+    codeTypes: ["qr", "ean-13"],
+    onCodeScanned: codes => {
+      try {
+        const code = codes[0].value;
+        if (code) {
+          console.log(JSON.parse(code).code);
+          setCode(JSON.parse(code).code);
+          setCameraIsActive(false);
+        }
+        // console.log(`Scanned ${codes.length} codes!\n${codes[0].value}`);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  });
+  useEffect(() => {
+    const codeTable = code.split("");
+    if (codeTable.length > 0) {
+      setCode1(codeTable[0]);
+    }
+    if (codeTable.length > 1) {
+      setCode2(codeTable[1]);
+    }
+    if (codeTable.length > 2) {
+      setCode3(codeTable[2]);
+    }
+    if (codeTable.length > 3) {
+      setCode4(codeTable[3]);
+    }
+    if (codeTable.length > 4) {
+      setCode5(codeTable[4]);
+    }
+    if (codeTable.length > 5) {
+      setCode6(codeTable[5]);
+    }
+    if (codeTable.length > 6) {
+      setCode7(codeTable[6]);
+    }
+    if (codeTable.length > 7) {
+      setCode8(codeTable[7]);
+    }
+  }, [code]);
   useEffect(() => {
     setCode(
       codeFragmentAction(code1, setCode1, code2Input.current, setCode2) +
@@ -67,6 +129,14 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
         justifyContent: "center",
         alignItems: "center",
       }}>
+      {cameraIsActive && (
+        <Camera
+          style={{ width: 200, height: 200 }}
+          device={device}
+          codeScanner={codeScanner}
+          isActive={true}
+        />
+      )}
       <View style={{ flexDirection: "row" }}>
         <TextInput
           style={style.TextInput}
