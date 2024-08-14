@@ -10,12 +10,12 @@ import { Colors } from "../../styles/Colors.ts";
 // import Text from '../Text/index.ts';
 export const InputNumber = ({
   defaultNumber = 1,
-  onChang=()=>{},
+  onChang = () => {},
   onlyPositive = true,
 }: {
-  defaultNumber: number;
-  onChang: (number: number) => void;
-  onlyPositive: boolean;
+  defaultNumber?: number;
+  onChang?: (number: number) => void;
+  onlyPositive?: boolean;
 }) => {
   const [value, setValue] = React.useState(defaultNumber);
 
