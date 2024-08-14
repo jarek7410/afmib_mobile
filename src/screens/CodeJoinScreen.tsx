@@ -47,6 +47,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
     }
   }, [hasPermission, requestPermission]);
   const device = useCameraDevice("back");
+
   const codeScanner = useCodeScanner({
     codeTypes: ["qr", "ean-13"],
     onCodeScanned: codes => {
@@ -129,7 +130,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
         justifyContent: "center",
         alignItems: "center",
       }}>
-      {cameraIsActive && (
+      {cameraIsActive && device && (
         <Camera
           style={{ width: 200, height: 200 }}
           device={device}

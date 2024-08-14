@@ -1,8 +1,8 @@
 import 'react-native'
 import React, { useState } from "react";
-import Button from "../components/Button";
+import Button from "../src/components/Button";
 import renderer from "react-test-renderer";
-import SignInUpTextInput from "../components/SignInUpTextInput";
+import SignInUpTextInput from "../src/components/SignInUpTextInput";
 
 describe('Button component', () => {
   test('render', () => {

@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./rootStats.ts";
 import { screen } from "../enum/screen.ts";
 import { getServerURL, getToken } from "../storage/login.ts";
-import Text from "../components/Text/index.ts";
+import Text from "../components/Text";
 import Button from "../components/Button";
 import { Colors } from "../styles/Colors.ts";
 
