@@ -42,10 +42,10 @@ export const InputNumber = ({
   return (
     <View style={{ flexDirection: "row" }}>
       <TouchableHighlight
-        onPress={increment}
-        onLongPress={moreIncrement}
+        onPress={decrement}
+        onLongPress={moreDecrement}
         style={[style.button]}>
-        <Text style={{ fontSize: 40, color: "black" }}>+</Text>
+        <Text style={{ fontSize: 40, color: "black" }}>-</Text>
       </TouchableHighlight>
       <TextInput
         onChangeText={text => setValue(parseInt(text))}
@@ -64,10 +64,10 @@ export const InputNumber = ({
         ]}
       />
       <TouchableHighlight
-        onPress={decrement}
-        onLongPress={moreDecrement}
+        onPress={increment}
+        onLongPress={moreIncrement}
         style={[style.button]}>
-        <Text style={{ fontSize: 40, color: "black" }}>-</Text>
+        <Text style={{ fontSize: 40, color: "black" }}>+</Text>
       </TouchableHighlight>
     </View>
   );
