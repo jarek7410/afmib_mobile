@@ -1,14 +1,31 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { codejoinDTO, tableJoinDTO } from "./dto.ts";
+import { codejoinDTO, tableJoinDTO, tournamentDTO } from "./dto.ts";
 import { addCodeToHistory } from "./history.ts";
 
 export const saveCodeJoin = async (codeJoin: codejoinDTO) => {
   await AsyncStorage.setItem("@codeJoin", JSON.stringify(codeJoin));
   addCodeToHistory(codeJoin.code);
 };
-export const getCodeJoin = async (): Promise<codejoinDTO | null> => {
+export const getCodeJoin = async (): Promise<string | null> => {
+  const codeJoin = await AsyncStorage.getItem("@codeJoin");
+  return codeJoin != null ? JSON.parse(codeJoin).code : null;
+};
+export const getCodeJoinObject = async (): Promise<codejoinDTO | null> => {
   const codeJoin = await AsyncStorage.getItem("@codeJoin");
   return codeJoin != null ? JSON.parse(codeJoin) : null;
+};
+
+export const saveTournament = async (tournament: tournamentDTO) => {
+  await AsyncStorage.setItem(
+    (await getCodeJoin()) + "@tournament",
+    JSON.stringify(tournament),
+  );
+};
+export const getTournament = async (): Promise<tournamentDTO | null> => {
+  const tournament = await AsyncStorage.getItem(
+    (await getCodeJoin()) + "@tournament",
+  );
+  return tournament != null ? JSON.parse(tournament) : null;
 };
 
 export const saveTableJoin = async (tableJoin: tableJoinDTO) => {

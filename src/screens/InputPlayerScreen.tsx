@@ -6,7 +6,14 @@ import { screen } from "../enum/screen.ts";
 import InputNumber from "../components/InputNumber";
 import { Colors } from "../styles/Colors.ts";
 import RadionButton from "../components/radiobutton";
-import { saveTableJoin } from "../storage/tournament.ts";
+import {
+  getPairNumber,
+  savePairNumber,
+  saveTableJoin,
+  saveTournament,
+} from "../storage/tournament.ts";
+import { joinTournament } from "../api/joinTournament.ts";
+import { getPair } from "../api/getPair.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.InputPlayer>;
 
@@ -43,14 +50,23 @@ export const InputPlayerScreen = ({ navigation }: Props) => {
       <Button
         title={"Select"}
         onPress={() => {
-          saveTableJoin({ section, table, round, isNS });
-          navigation.navigate(screen.Summary);
-          navigation.reset({ routes: [{ name: screen.Summary }] });
+          joinTournament().then(tourn => {
+            saveTournament(tourn);
+          });
+          saveTableJoin({ section, table, round, is_ns: isNS }).then(() => {
+            getPair().then(pair => {
+              console.log("pair: ", pair);
+              savePairNumber(pair);
+              navigation.navigate(screen.Summary);
+              navigation.reset({ routes: [{ name: screen.Summary }] });
+            });
+          });
         }}
       />
       <Text>Section: {section}</Text>
       <Text>Table: {table}</Text>
       <Text>Round: {round}</Text>
+      <Text>isNS: {isNS}</Text>
     </View>
   );
 };

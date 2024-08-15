@@ -14,7 +14,7 @@ export const getCodeHistory = async (): Promise<string[]> => {
 
 export const getCodeHistoryWithDates = async (): Promise<codeWithDate[]> => {
   const codes = await AsyncStorage.getItem("@codeHistory");
-  console.log(codes);
+  console.log("code history", codes);
   if (codes === null) {
     return [];
   }

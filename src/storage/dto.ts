@@ -18,7 +18,7 @@ export interface tableJoinDTO {
   section: number;
   table: number;
   round: number;
-  isNS: boolean;
+  is_ns: boolean;
 }
 export interface tournamentDTO {
   ID: number;
