@@ -34,6 +34,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
   const [code6, setCode6] = React.useState<string>("");
   const [code7, setCode7] = React.useState<string>("");
   const [code8, setCode8] = useState<string>("");
+  const [magicCode, setMagicCode] = useState<string>("");
 
   const { hasPermission, requestPermission } = useCameraPermission();
   const [cameraIsActive, setCameraIsActive] = useState<boolean>(true);
@@ -55,7 +56,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
         const code = codes[0].value;
         if (code) {
           console.log(JSON.parse(code).code);
-          setCode(JSON.parse(code).code);
+          setMagicCode(JSON.parse(code).code);
           setCameraIsActive(false);
         }
         // console.log(`Scanned ${codes.length} codes!\n${codes[0].value}`);
@@ -65,7 +66,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
     },
   });
   useEffect(() => {
-    const codeTable = code.split("");
+    const codeTable = magicCode.split("");
     if (codeTable.length > 0) {
       setCode1(codeTable[0]);
     }
@@ -90,7 +91,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
     if (codeTable.length > 7) {
       setCode8(codeTable[7]);
     }
-  }, [code]);
+  }, [magicCode]);
   useEffect(() => {
     setCode(
       codeFragmentAction(code1, setCode1, code2Input.current, setCode2) +
