@@ -14,7 +14,7 @@ export const Button = ({
   children?: any;
   onPress?: () => void;
   title?: string;
-  style?: { width: number };
+  style?: any;
 }) => {
   if (title) {
     return (

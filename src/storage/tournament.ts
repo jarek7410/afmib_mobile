@@ -13,26 +13,26 @@ export const getCodeJoin = async (): Promise<codejoinDTO | null> => {
 
 export const saveTableJoin = async (tableJoin: tableJoinDTO) => {
   await AsyncStorage.setItem(
-    (await getCodeJoin())+"@tableJoin" ,
+    (await getCodeJoin()) + "@tableJoin",
     JSON.stringify(tableJoin),
   );
 };
 export const getTableJoin = async (): Promise<tableJoinDTO | null> => {
   const tableJoin = await AsyncStorage.getItem(
-    (await getCodeJoin())+"@tableJoin",
+    (await getCodeJoin()) + "@tableJoin",
   );
   return tableJoin != null ? JSON.parse(tableJoin) : null;
 };
 
 export const savePairNumber = async (pairNumber: number) => {
   await AsyncStorage.setItem(
-    (await getCodeJoin())+"@pairNumber" ,
+    (await getCodeJoin()) + "@pairNumber",
     JSON.stringify(pairNumber),
   );
 };
 export const getPairNumber = async (): Promise<number | null> => {
   const pairNumber = await AsyncStorage.getItem(
-    (await getCodeJoin())+"@pairNumber" ,
+    (await getCodeJoin()) + "@pairNumber",
   );
   return pairNumber != null ? JSON.parse(pairNumber) : null;
 };

@@ -37,7 +37,7 @@ export interface sendPlayerNameDTO {
   number: string;
   name: string;
 }
-export interface codeWithDate{
+export interface codeWithDate {
   code: string;
   date: Date;
 }
