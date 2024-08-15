@@ -20,6 +20,6 @@ export const getPair = async () => {
     })
     .then((respJson: any) => {
       console.log("Done.");
-      return (respJson.pair_number);
+      return respJson.pair_number;
     });
 };
