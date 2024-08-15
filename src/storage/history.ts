@@ -9,7 +9,7 @@ export const addCodeToHistory = async (code: string) => {
 };
 export const getCodeHistory = async (): Promise<string[]> => {
   const codes = await getCodeHistoryWithDates();
-  return codes.map(codeWithDate => codeWithDate.code);
+  return codes.map(cwd => cwd.code);
 };
 
 export const getCodeHistoryWithDates = async (): Promise<codeWithDate[]> => {

@@ -53,10 +53,10 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
     codeTypes: ["qr", "ean-13"],
     onCodeScanned: codes => {
       try {
-        const code = codes[0].value;
-        if (code) {
-          console.log(JSON.parse(code).code);
-          setMagicCode(JSON.parse(code).code);
+        const codee = codes[0].value;
+        if (codee) {
+          console.log(JSON.parse(codee).code);
+          setMagicCode(JSON.parse(codee).code);
           setCameraIsActive(false);
         }
         // console.log(`Scanned ${codes.length} codes!\n${codes[0].value}`);
@@ -106,15 +106,15 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
   }, [code1, code2, code3, code4, code5, code6, code7, code8]);
   const codeFragmentAction = (
     codef: string,
-    setCode: Function,
+    setCod: Function,
     fun?: TextInput | null,
     setCodeNext?: Function,
   ): string => {
     if (codef.length > 1) {
       fun?.focus();
-      setCode(codef.split("")[0]);
+      setCod(codef.split("")[0]);
       setCodeNext ? setCodeNext(codef.split("")[1]) : undefined;
-      return setCode(codef.split("")[0]);
+      return setCod(codef.split("")[0]);
     } else {
       return codef;
     }
