@@ -41,3 +41,20 @@ export interface codeWithDate {
   code: string;
   date: Date;
 }
+export interface movementDTO {
+  CreatedAt: string;
+  UpdatedAt: string;
+  DeletedAt: string;
+  section: number;
+  table: number;
+  round: number;
+  nsPair: number;
+  ewPair: number;
+  lowBoard: number;
+  highBoard: number;
+  customBoards: string;
+  customRound: number;
+  customSegment: number;
+  customNsPair: number;
+  customEWPair: number;
+}

@@ -7,7 +7,6 @@ import InputNumber from "../components/InputNumber";
 import { Colors } from "../styles/Colors.ts";
 import RadionButton from "../components/radiobutton";
 import {
-  getPairNumber,
   savePairNumber,
   saveTableJoin,
   saveTournament,

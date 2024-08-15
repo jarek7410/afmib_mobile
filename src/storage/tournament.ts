@@ -1,5 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { codejoinDTO, tableJoinDTO, tournamentDTO } from "./dto.ts";
+import {
+  codejoinDTO,
+  movementDTO,
+  tableJoinDTO,
+  tournamentDTO,
+} from "./dto.ts";
 import { addCodeToHistory } from "./history.ts";
 
 export const saveCodeJoin = async (codeJoin: codejoinDTO) => {
@@ -47,9 +52,22 @@ export const savePairNumber = async (pairNumber: number) => {
     JSON.stringify(pairNumber),
   );
 };
-export const getPairNumber = async (): Promise<number | null> => {
+export const getPairNumber = async (): Promise<number> => {
   const pairNumber = await AsyncStorage.getItem(
     (await getCodeJoin()) + "@pairNumber",
   );
-  return pairNumber != null ? JSON.parse(pairNumber) : null;
+  return pairNumber != null ? JSON.parse(pairNumber) : 0;
+};
+
+export const saveMovementData = async (movementData: movementDTO[]) => {
+  await AsyncStorage.setItem(
+    (await getCodeJoin()) + "@movementData",
+    JSON.stringify(movementData),
+  );
+};
+export const getMovementData = async (): Promise<movementDTO[]> => {
+  const movementData = await AsyncStorage.getItem(
+    (await getCodeJoin()) + "@movementData",
+  );
+  return movementData != null ? JSON.parse(movementData) : [];
 };
