@@ -3,10 +3,12 @@ export type RootStackParamList = {
   Login: { login: () => void };
   Register: undefined;
   CodeJoin: undefined;
-  Settings:  { login: () => void };
+  Settings: { logout: () => void };
   InputPlayer: undefined;
   Summary: undefined;
   InfoReceiver: undefined;
   Movement: undefined;
   InputData: undefined;
+  Loading: undefined;
+  Tournament: undefined;
 };

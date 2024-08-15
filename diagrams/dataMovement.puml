@@ -1,0 +1,8 @@
+@startuml
+cloud server
+agent screens
+database asyncStorage
+api -> server
+asyncStorage -> api
+screens -> asyncStorage
+@enduml

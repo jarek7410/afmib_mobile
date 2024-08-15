@@ -1,0 +1,13 @@
+@startjson
+{
+		"section": 1,
+		"table": 1,
+		"round": 1,
+		"is_ns": true
+}
+@endjson
+@startjson
+{
+	"pair_number": 12
+}
+@endjson
