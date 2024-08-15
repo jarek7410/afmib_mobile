@@ -1,0 +1,101 @@
+@startjson
+{
+	"playerNumbers": [
+		{
+			"direction": "N",
+			"number": "-1",
+			"name": "name"
+		},
+		{
+			"direction": "S",
+			"number": "",
+			"name": "name"
+		}
+	],
+	"section": 99,
+	"table": 99,
+	"round": 99
+}
+@endjson
+@startjson
+{
+	"ID": 1,
+	"CreatedAt": "2024-08-11T21:14:42.595234+02:00",
+	"UpdatedAt": "2024-08-15T13:46:47.3393063+02:00",
+	"DeletedAt": null,
+	"name": "240811 test",
+	"creator_id": 2,
+	"creator": {
+		"CreatedAt": "0001-01-01T00:00:00Z",
+		"UpdatedAt": "0001-01-01T00:00:00Z",
+		"DeletedAt": null,
+		"ID": 0,
+		"role_id": 0,
+		"username": "",
+		"name": "",
+		"surname": "",
+		"email": "",
+		"pid": ""
+	},
+	"code_id": 1,
+	"code": {
+		"CreatedAt": "0001-01-01T00:00:00Z",
+		"UpdatedAt": "0001-01-01T00:00:00Z",
+		"DeletedAt": null,
+		"ID": 0,
+		"code": ""
+	},
+	"referee": null,
+	"round_data": null,
+	"player_numbers": [
+		{
+			"ID": 11,
+			"CreatedAt": "2024-08-15T13:46:47.3401333+02:00",
+			"UpdatedAt": "2024-08-15T13:46:47.3401333+02:00",
+			"DeletedAt": null,
+			"section": 99,
+			"table": 99,
+			"direction": "N",
+			"number": {
+				"String": "-1",
+				"Valid": true
+			},
+			"name": {
+				"String": "name",
+				"Valid": true
+			},
+			"round": 99,
+			"updated": false,
+			"time_log": {
+				"Time": "2024-08-15T13:46:47.3383+02:00",
+				"Valid": true
+			},
+			"user_id": 4
+		},
+		{
+			"ID": 12,
+			"CreatedAt": "2024-08-15T13:46:47.3401333+02:00",
+			"UpdatedAt": "2024-08-15T13:46:47.3401333+02:00",
+			"DeletedAt": null,
+			"section": 99,
+			"table": 99,
+			"direction": "S",
+			"number": {
+				"String": "",
+				"Valid": false
+			},
+			"name": {
+				"String": "name",
+				"Valid": true
+			},
+			"round": 99,
+			"updated": false,
+			"time_log": {
+				"Time": "2024-08-15T13:46:47.3383+02:00",
+				"Valid": true
+			},
+			"user_id": 4
+		}
+	]
+}
+@endjson
