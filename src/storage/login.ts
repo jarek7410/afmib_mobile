@@ -15,7 +15,7 @@ export const getToken = async (): Promise<string | null> => {
 export const getServerURL = async (): Promise<string> => {
   const url = await AsyncStorage.getItem("@serverURL");
   if (url === null) {
-    return "http://192.168.0.124:2137/";
+    return "http://192.168.0.120:2137/";
   }
   return url;
 };

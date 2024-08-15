@@ -6,6 +6,8 @@ import { screen } from "../../enum/screen.ts";
 import { getServerURL, getToken, setLoginData } from "../../storage/login.ts";
 import Button from "../../components/Button";
 import { style } from "../../styles/loginRegisterStyle.ts";
+import { getMyObjects } from "../../api/getMe.ts";
+import { MeDataDto } from "../../storage/dto.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Settings>;
 
@@ -24,30 +26,14 @@ export const AppSettingScreen = ({ route }: Props) => {
   // const  [zip, setZip] = useState<string>("");
   // const  [country, setCountry] = useState<string>("");
   useEffect(() => {
-    const getMyObjects = async () => {
-      try {
-        const response = await fetch((await getServerURL()) + "api/me", {
-          headers: {
-            Authorization: "Bearer " + (await getToken()),
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response.ok) {
-          console.log("HomeScreen: getMyObjects: response not ok");
-          return;
-        }
-        const jsonValue = await response.json();
-        console.log(jsonValue);
-        setName(jsonValue.name);
-        setSurname(jsonValue.surname);
-        setEmail(jsonValue.email);
-        setPID(jsonValue.pid);
-        setUsername(jsonValue.username);
-      } catch (e) {
-        // read error
-      }
-    };
-    getMyObjects();
+    getMyObjects().then((jsonValue: MeDataDto) => {
+      console.log(jsonValue);
+      setName(jsonValue.name);
+      setSurname(jsonValue.surname);
+      setEmail(jsonValue.email);
+      setPID(jsonValue.pid);
+      setUsername(jsonValue.username);
+    });
   }, []);
 
   const logout = () => {

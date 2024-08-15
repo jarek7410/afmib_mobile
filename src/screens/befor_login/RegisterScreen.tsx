@@ -7,6 +7,7 @@ import { style } from "../../styles/loginRegisterStyle.ts";
 import { Colors } from "../../styles/Colors.ts";
 import Button from "../../components/Button";
 import { getServerURL } from "../../storage/login.ts";
+import { register } from "../../api/register.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Register>;
 
@@ -16,27 +17,17 @@ export const RegisterScreen = ({ navigation }: Props) => {
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
-  const register = async () => {
-    console.log("register: " + username + " " + email);
-    console.log((await getServerURL()) + "auth/user/register");
 
-    const response = await fetch(
-      (await getServerURL()) + "auth/user/register",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, email, password }),
-      },
-    );
-    if (!response.ok) {
-      console.log("register failed");
-      return;
-    }
-    console.log("register success");
-    navigation.goBack();
+  const registerButtonAction = () => {
+    console.log("register: " + username + " " + email);
+    getServerURL().then(url => console.log(url + "auth/user/register"));
+
+    register(username, email, password).then(() => {
+      console.log("register success");
+      navigation.goBack();
+    });
   };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View
@@ -82,9 +73,9 @@ export const RegisterScreen = ({ navigation }: Props) => {
             ref={passwordInput}
             blurOnSubmit={true}
             returnKeyType="send"
-            onSubmitEditing={register}
+            onSubmitEditing={registerButtonAction}
           />
-          <Button title={"register"} onPress={register} />
+          <Button title={"register"} onPress={registerButtonAction} />
         </View>
       </View>
     </SafeAreaView>

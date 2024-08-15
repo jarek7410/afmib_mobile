@@ -47,5 +47,5 @@ const style = StyleSheet.create({
   },
   base: {
     backgroundColor: Colors.background,
-  }
+  },
 });
