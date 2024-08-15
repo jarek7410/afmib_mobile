@@ -6,7 +6,7 @@ import { screen } from "../enum/screen.ts";
 import InputNumber from "../components/InputNumber";
 import { Colors } from "../styles/Colors.ts";
 import RadionButton from "../components/radiobutton";
-import { saveTableJoin } from "../storage/codeJoin.ts";
+import { saveTableJoin } from "../storage/tournament.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.InputPlayer>;
 

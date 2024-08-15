@@ -4,7 +4,7 @@ import { RootStackParamList } from "./rootStats.ts";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { screen } from "../enum/screen.ts";
 import { style } from "../styles/codeJoinSytle.ts";
-import { saveCodeJoin } from "../storage/codeJoin.ts";
+import { saveCodeJoin } from "../storage/tournament.ts";
 import Button from "../components/Button";
 import { Colors } from "../styles/Colors.ts";
 import {

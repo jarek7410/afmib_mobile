@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { getServerURL, getToken, setLoginData } from "../src/storage/login";
 import AsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
-import { getCodeJoin, saveCodeJoin } from "../src/storage/codeJoin";
+import { getCodeJoin, saveCodeJoin } from "../src/storage/tournament";
 import { codejoinDTO } from "../src/storage/dto";
 
 describe('storage', () => {

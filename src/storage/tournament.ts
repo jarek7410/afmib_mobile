@@ -10,9 +10,27 @@ export const getCodeJoin = async (): Promise<codejoinDTO | null> => {
 };
 
 export const saveTableJoin = async (tableJoin: tableJoinDTO) => {
-  await AsyncStorage.setItem("@tableJoin", JSON.stringify(tableJoin));
+  await AsyncStorage.setItem(
+    "@tableJoin" + (await getCodeJoin()),
+    JSON.stringify(tableJoin),
+  );
 };
 export const getTableJoin = async (): Promise<tableJoinDTO | null> => {
-  const tableJoin = await AsyncStorage.getItem("@tableJoin");
+  const tableJoin = await AsyncStorage.getItem(
+    "@tableJoin" + (await getCodeJoin()),
+  );
   return tableJoin != null ? JSON.parse(tableJoin) : null;
+};
+
+export const savePairNumber = async (pairNumber: number) => {
+  await AsyncStorage.setItem(
+    "@pairNumber" + (await getCodeJoin()),
+    JSON.stringify(pairNumber),
+  );
+};
+export const getPairNumber = async (): Promise<number | null> => {
+  const pairNumber = await AsyncStorage.getItem(
+    "@pairNumber" + (await getCodeJoin()),
+  );
+  return pairNumber != null ? JSON.parse(pairNumber) : null;
 };
