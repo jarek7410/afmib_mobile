@@ -3,11 +3,12 @@ import { SafeAreaView, ScrollView, TextInput, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../rootStats.ts";
 import { screen } from "../../enum/screen.ts";
-import { getServerURL, getToken, setLoginData } from "../../storage/login.ts";
+import { setLoginData } from "../../storage/login.ts";
 import Button from "../../components/Button";
 import { style } from "../../styles/loginRegisterStyle.ts";
 import { getMyObjects } from "../../api/getMe.ts";
 import { MeDataDto } from "../../storage/dto.ts";
+import { clearDB, dbOptions } from "../../storage/dbOptions.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Settings>;
 
@@ -117,6 +118,14 @@ export const AppSettingScreen = ({ route }: Props) => {
           />
           <Button title={"save"} onPress={save} />
           <Button title={"logout"} onPress={logout} />
+          <Button title={"dump db data to logs"} onPress={dbOptions} />
+          <Button
+            title={"clear App Data"}
+            onPress={() => {
+              clearDB();
+              logout();
+            }}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

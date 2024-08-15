@@ -4,8 +4,9 @@ import { tournamentDTO } from "../storage/dto.ts";
 
 export const joinTournament = async () => {
   const respons = await fetch(
-    (await getServerURL()) + "/api/view/tournament/" + (await getCodeJoin()),
+    (await getServerURL()) + "api/view/tournament/" + (await getCodeJoin()),
     {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
@@ -15,11 +16,11 @@ export const joinTournament = async () => {
       if (response.ok) {
         return response.json();
       }
-      console.log("joinTournament: response not ok");
+      console.log("joinTournament", "joinTournament: response not ok");
       throw new Error("joinTournament failed: data grab");
     })
     .then((respJson: tournamentDTO) => {
-      console.log("Done.");
+      console.log("joinTournament", "Done.");
       return respJson;
     });
   return respons;

@@ -18,7 +18,7 @@ export interface tableJoinDTO {
   section: number;
   table: number;
   round: number;
-  isNS: boolean;
+  is_ns: boolean;
 }
 export interface tournamentDTO {
   ID: number;
@@ -37,7 +37,24 @@ export interface sendPlayerNameDTO {
   number: string;
   name: string;
 }
-export interface codeWithDate{
+export interface codeWithDate {
   code: string;
   date: Date;
+}
+export interface movementDTO {
+  CreatedAt: string;
+  UpdatedAt: string;
+  DeletedAt: string;
+  section: number;
+  table: number;
+  round: number;
+  nsPair: number;
+  ewPair: number;
+  lowBoard: number;
+  highBoard: number;
+  customBoards: string;
+  customRound: number;
+  customSegment: number;
+  customNsPair: number;
+  customEWPair: number;
 }

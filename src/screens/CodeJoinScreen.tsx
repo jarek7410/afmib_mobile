@@ -34,6 +34,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
   const [code6, setCode6] = React.useState<string>("");
   const [code7, setCode7] = React.useState<string>("");
   const [code8, setCode8] = useState<string>("");
+  const [magicCode, setMagicCode] = useState<string>("");
 
   const { hasPermission, requestPermission } = useCameraPermission();
   const [cameraIsActive, setCameraIsActive] = useState<boolean>(true);
@@ -52,10 +53,10 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
     codeTypes: ["qr", "ean-13"],
     onCodeScanned: codes => {
       try {
-        const code = codes[0].value;
-        if (code) {
-          console.log(JSON.parse(code).code);
-          setCode(JSON.parse(code).code);
+        const codee = codes[0].value;
+        if (codee) {
+          console.log(JSON.parse(codee).code);
+          setMagicCode(JSON.parse(codee).code);
           setCameraIsActive(false);
         }
         // console.log(`Scanned ${codes.length} codes!\n${codes[0].value}`);
@@ -65,7 +66,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
     },
   });
   useEffect(() => {
-    const codeTable = code.split("");
+    const codeTable = magicCode.split("");
     if (codeTable.length > 0) {
       setCode1(codeTable[0]);
     }
@@ -90,7 +91,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
     if (codeTable.length > 7) {
       setCode8(codeTable[7]);
     }
-  }, [code]);
+  }, [magicCode]);
   useEffect(() => {
     setCode(
       codeFragmentAction(code1, setCode1, code2Input.current, setCode2) +
@@ -105,15 +106,15 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
   }, [code1, code2, code3, code4, code5, code6, code7, code8]);
   const codeFragmentAction = (
     codef: string,
-    setCode: Function,
+    setCod: Function,
     fun?: TextInput | null,
     setCodeNext?: Function,
   ): string => {
     if (codef.length > 1) {
       fun?.focus();
-      setCode(codef.split("")[0]);
+      setCod(codef.split("")[0]);
       setCodeNext ? setCodeNext(codef.split("")[1]) : undefined;
-      return setCode(codef.split("")[0]);
+      return setCod(codef.split("")[0]);
     } else {
       return codef;
     }

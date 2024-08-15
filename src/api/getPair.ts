@@ -1,12 +1,14 @@
 import { getCodeJoin, getTableJoin } from "../storage/tournament.ts";
-import { getServerURL } from "../storage/login.ts";
+import { getServerURL, getToken } from "../storage/login.ts";
 
-export const getPair = async () => {
+export const getPair = async (): Promise<number> => {
   return await fetch(
-    (await getServerURL()) + "/api/tournament/" + (await getCodeJoin()),
+    (await getServerURL()) + "api/tournament/" + (await getCodeJoin()),
     {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + (await getToken()),
       },
       body: JSON.stringify(await getTableJoin()),
     },

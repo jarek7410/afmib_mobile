@@ -1,38 +1,73 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { codejoinDTO, tableJoinDTO } from "./dto.ts";
+import {
+  codejoinDTO,
+  movementDTO,
+  tableJoinDTO,
+  tournamentDTO,
+} from "./dto.ts";
 import { addCodeToHistory } from "./history.ts";
 
 export const saveCodeJoin = async (codeJoin: codejoinDTO) => {
   await AsyncStorage.setItem("@codeJoin", JSON.stringify(codeJoin));
   addCodeToHistory(codeJoin.code);
 };
-export const getCodeJoin = async (): Promise<codejoinDTO | null> => {
+export const getCodeJoin = async (): Promise<string | null> => {
+  const codeJoin = await AsyncStorage.getItem("@codeJoin");
+  return codeJoin != null ? JSON.parse(codeJoin).code : null;
+};
+export const getCodeJoinObject = async (): Promise<codejoinDTO | null> => {
   const codeJoin = await AsyncStorage.getItem("@codeJoin");
   return codeJoin != null ? JSON.parse(codeJoin) : null;
 };
 
+export const saveTournament = async (tournament: tournamentDTO) => {
+  await AsyncStorage.setItem(
+    (await getCodeJoin()) + "@tournament",
+    JSON.stringify(tournament),
+  );
+};
+export const getTournament = async (): Promise<tournamentDTO | null> => {
+  const tournament = await AsyncStorage.getItem(
+    (await getCodeJoin()) + "@tournament",
+  );
+  return tournament != null ? JSON.parse(tournament) : null;
+};
+
 export const saveTableJoin = async (tableJoin: tableJoinDTO) => {
   await AsyncStorage.setItem(
-    (await getCodeJoin())+"@tableJoin" ,
+    (await getCodeJoin()) + "@tableJoin",
     JSON.stringify(tableJoin),
   );
 };
 export const getTableJoin = async (): Promise<tableJoinDTO | null> => {
   const tableJoin = await AsyncStorage.getItem(
-    (await getCodeJoin())+"@tableJoin",
+    (await getCodeJoin()) + "@tableJoin",
   );
   return tableJoin != null ? JSON.parse(tableJoin) : null;
 };
 
 export const savePairNumber = async (pairNumber: number) => {
   await AsyncStorage.setItem(
-    (await getCodeJoin())+"@pairNumber" ,
+    (await getCodeJoin()) + "@pairNumber",
     JSON.stringify(pairNumber),
   );
 };
-export const getPairNumber = async (): Promise<number | null> => {
+export const getPairNumber = async (): Promise<number> => {
   const pairNumber = await AsyncStorage.getItem(
-    (await getCodeJoin())+"@pairNumber" ,
+    (await getCodeJoin()) + "@pairNumber",
   );
-  return pairNumber != null ? JSON.parse(pairNumber) : null;
+  return pairNumber != null ? JSON.parse(pairNumber) : 0;
+};
+
+export const saveMovementData = async (movementData: movementDTO[]) => {
+  await AsyncStorage.setItem(
+    (await getCodeJoin()) + "@movementData",
+    JSON.stringify(movementData),
+  );
+};
+export const getMovementData = async (): Promise<movementDTO[]> => {
+  const movementData = await AsyncStorage.getItem(
+    (await getCodeJoin()) + "@movementData",
+  );
+  return movementData != null ? JSON.parse(movementData) : [];
 };
