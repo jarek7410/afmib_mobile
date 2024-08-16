@@ -1,0 +1,19 @@
+@startjson
+{
+	"playerNumbers": [
+		{
+			"direction": "N",
+			"number": "-1",
+			"name": "name"
+		},
+		{
+			"direction": "S",
+			"number": "",
+			"name": "name"
+		}
+	],
+	"section": 99,
+	"table": 99,
+	"round": 99
+}
+@endjson

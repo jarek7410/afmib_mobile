@@ -1,11 +1,5 @@
 @startjson
 {
-	"username": "test2",
-	"password":"***"
-}
-@endjson
-@startjson
-{
 	"message": "Successfully logged in",
 	"token": "TOKENtokenTOKENtoken",
 	"username": "test2"
