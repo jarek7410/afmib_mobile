@@ -6,8 +6,3 @@
 		"is_ns": true
 }
 @endjson
-@startjson
-{
-	"pair_number": 12
-}
-@endjson

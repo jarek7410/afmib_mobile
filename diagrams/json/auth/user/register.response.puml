@@ -1,12 +1,5 @@
 @startjson
 {
-	"username": "test2",
-	"email":"tesat@bmacharia.com",
-	"password":"***"
-}
-@endjson
-@startjson
-{
 	"user": {
 		"CreatedAt": "2024-08-11T21:09:46.1765123+02:00",
 		"UpdatedAt": "2024-08-11T21:09:46.1765123+02:00",

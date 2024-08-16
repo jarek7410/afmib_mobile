@@ -1,24 +1,5 @@
 @startjson
 {
-	"playerNumbers": [
-		{
-			"direction": "N",
-			"number": "-1",
-			"name": "name"
-		},
-		{
-			"direction": "S",
-			"number": "",
-			"name": "name"
-		}
-	],
-	"section": 99,
-	"table": 99,
-	"round": 99
-}
-@endjson
-@startjson
-{
 	"ID": 1,
 	"CreatedAt": "2024-08-11T21:14:42.595234+02:00",
 	"UpdatedAt": "2024-08-15T13:46:47.3393063+02:00",
