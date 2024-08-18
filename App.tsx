@@ -20,6 +20,7 @@ import { getToken } from "./src/storage/login.ts";
 import { LoadingScreen } from "./src/screens/LoadingScreen.tsx";
 import Button from "./src/components/Button";
 import Text from "./src/components/Text/index.ts";
+import { getCodeJoin } from "./src/storage/tournament.ts";
 // import Icon from "react-native-vector-icons/AntDesign";
 
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -28,6 +29,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function App() {
   const [login, setLogin] = useState<boolean | null>(null);
+  const [isJoin, setIsJoin] = useState<boolean>(false);
 
   useEffect(() => {
     getToken().then(jwt => {
@@ -50,6 +52,15 @@ function App() {
       console.log("App,loginActin: no jwt");
     }
   };
+  const joinToTournamtnt = () =>{
+    console.log("join to tournament ");
+    setIsJoin(true);
+  };
+  const exitTournament = () => {
+    console.log("exit tournament");
+    setIsJoin(false);
+  };
+
   if (login === null) {
     return <LoadingScreen />;
   }
@@ -57,40 +68,61 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName={screen.Login}>
         {login && (
-          <Stack.Group
-          // initialRouteName={screen.Home}
-          >
-            <Stack.Screen
-              name={screen.Home}
-              options={({ navigation }) => ({
-                headerRight: () => (
-                  <Button
-                    style={{ width: 75 }}
-                    onPress={() => navigation.navigate(screen.Settings)}>
-                    <Text>settings</Text>
-                  </Button>
-                ),
-              })}
-              component={HomeScreen}
-            />
-            <Stack.Screen name={screen.CodeJoin} component={CodeJoinScreen} />
-            <Stack.Screen
-              name={screen.InputPlayer}
-              component={InputPlayerScreen}
-            />
-            <Stack.Screen name={screen.Summary} component={SummaryScreen} />
-            <Stack.Screen
-              name={screen.InfoReceiver}
-              component={InfoReceiverScreen}
-            />
-            <Stack.Screen name={screen.Movement} component={MovementScreen} />
-            <Stack.Screen name={screen.InputData} component={InputDataScreen} />
+          <>
+            {!isJoin && (
+              <Stack.Group>
+                <Stack.Screen
+                  name={screen.Home}
+                  options={({ navigation }) => ({
+                    headerRight: () => (
+                      <Button
+                        style={{ width: 75 }}
+                        onPress={() => navigation.navigate(screen.Settings)}>
+                        <Text>settings</Text>
+                      </Button>
+                    ),
+                  })}
+                  component={HomeScreen}
+                />
+                <Stack.Screen
+                  name={screen.CodeJoin}
+                  component={CodeJoinScreen}
+                />
+                <Stack.Screen
+                  name={screen.InputPlayer}
+                  component={InputPlayerScreen}
+                  initialParams={{ join: joinToTournamtnt }}
+                />
+              </Stack.Group>
+            )}
+            {isJoin && (
+              <Stack.Group>
+                <Stack.Screen
+                  name={screen.Summary}
+                  component={SummaryScreen}
+                  initialParams={{ exit: exitTournament }}
+                />
+
+                <Stack.Screen
+                  name={screen.InfoReceiver}
+                  component={InfoReceiverScreen}
+                />
+                <Stack.Screen
+                  name={screen.Movement}
+                  component={MovementScreen}
+                />
+                <Stack.Screen
+                  name={screen.InputData}
+                  component={InputDataScreen}
+                />
+              </Stack.Group>
+            )}
             <Stack.Screen
               name={screen.Settings}
               component={AppSettingScreen}
               initialParams={{ logout: loginToApp }}
             />
-          </Stack.Group>
+          </>
         )}
         {!login && (
           <Stack.Group>

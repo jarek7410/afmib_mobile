@@ -4,8 +4,8 @@ export type RootStackParamList = {
   Register: undefined;
   CodeJoin: undefined;
   Settings: { logout: () => void };
-  InputPlayer: undefined;
-  Summary: undefined;
+  InputPlayer: { join: () => void };
+  Summary: { exit: () => void };
   InfoReceiver: undefined;
   Movement: undefined;
   InputData: undefined;
