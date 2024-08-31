@@ -1,6 +1,6 @@
 export type RootStackParamList = {
   Home: undefined;
-  Login: { login: () => void };
+  Login: { login: () => Promise<void> };
   Register: undefined;
   CodeJoin: undefined;
   Settings: { logout: () => void };

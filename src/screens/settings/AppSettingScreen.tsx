@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, TextInput, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../rootStats.ts";
 import { screen } from "../../enum/screen.ts";
-import { setLoginData } from "../../storage/login.ts";
+import { logout as Logout } from "../../storage/login.ts";
 import Button from "../../components/Button";
 import { style } from "../../styles/loginRegisterStyle.ts";
 import { getMyObjects } from "../../api/getMe.ts";
@@ -20,6 +20,7 @@ export const AppSettingScreen = ({ route }: Props) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
+
   // const  [phone, setPhone] = useState<string>("");
   // const  [address, setAddress] = useState<string>("");
   // const  [city, setCity] = useState<string>("");
@@ -39,7 +40,7 @@ export const AppSettingScreen = ({ route }: Props) => {
 
   const logout = () => {
     route.params.logout();
-    setLoginData({ token: "", name: "", email: "" }).then(() => {
+    Logout().then(() => {
       console.log("logout");
     });
   };
@@ -93,6 +94,7 @@ export const AppSettingScreen = ({ route }: Props) => {
           />
 
           <TextInput
+            editable={false}
             style={style.TextInput}
             placeholder={"password"}
             onChangeText={setPassword}
@@ -101,6 +103,7 @@ export const AppSettingScreen = ({ route }: Props) => {
             secureTextEntry
           />
           <TextInput
+            editable={false}
             style={style.TextInput}
             placeholder={"new password"}
             onChangeText={setNewPassword}
@@ -109,6 +112,7 @@ export const AppSettingScreen = ({ route }: Props) => {
             secureTextEntry
           />
           <TextInput //TODO: add password validation
+            editable={false}
             style={style.TextInput}
             placeholder={"repeat new password"}
             onChangeText={setNewPassword}

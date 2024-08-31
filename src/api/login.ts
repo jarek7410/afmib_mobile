@@ -23,5 +23,8 @@ export const login = async (username: string, password: string) => {
         console.log("login success");
       });
       return data;
+    })
+    .catch(e => {
+      throw new Error("login failed");
     });
 };
