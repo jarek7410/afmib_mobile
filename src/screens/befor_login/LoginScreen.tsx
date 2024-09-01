@@ -3,10 +3,9 @@ import {
   TextInput,
   View,
   StyleSheet,
-  Modal,
   Pressable,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { screen } from "../../enum/screen.ts";
 import { RootStackParamList } from "../rootStats.ts";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -15,6 +14,11 @@ import { Colors } from "../../styles/Colors.ts";
 import { style } from "../../styles/loginRegisterStyle.ts";
 import Button from "../../components/Button";
 import { login } from "../../api/login.ts";
+import { Direction, magicModal } from "react-native-magic-modal";
+import { QuickModal } from "../../components/popup";
+import { handleQuickModal } from "../../handler/Modalhandler.ts";
+
+
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Login>;
 
@@ -23,18 +27,21 @@ export const LoginScreen = ({ navigation, route }: Props) => {
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
 
-
   const loginAction = async () => {
     // console.log("login");
     login(username, password)
       .then(() => {
         route.params.login().catch(e => {
-          console.log("work", e);
-          throw new Error("no login");
+          console.log("work i", e);
+          handleQuickModal(<QuickModal text={"Login failed\nwrong username or password"} />, 3000);
+          // throw new Error("no login");
         });
       })
       .catch(e => {
-        console.log("work", e);
+        handleQuickModal(<QuickModal text={"Login failed\nwrong username or password"} />, 3000);
+        // handleQuickModal();
+
+        console.log("work a", e);
       });
   };
   return (
@@ -122,5 +129,33 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+  },
+  container: {
+    backgroundColor: "#f0f0f0",
+    margin: 20,
+    paddingHorizontal: 25,
+    paddingVertical: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  body: {
+    textAlign: "center",
+    fontSize: 14,
+  },
+  buttonContainer: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 25,
+    backgroundColor: "#fab54d",
+    padding: 10,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

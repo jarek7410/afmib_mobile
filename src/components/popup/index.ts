@@ -1,2 +1,2 @@
-import { BasicModal, imperativeModalRef } from "./BasicPopup.tsx";
-export { BasicModal, imperativeModalRef };
+import { QuickModal } from "./BasicPopup.tsx";
+export { QuickModal };

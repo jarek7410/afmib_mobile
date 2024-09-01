@@ -1,7 +1,7 @@
 // In App.js in a new project
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import * as React from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { HomeScreen } from "./src/screens/HomeScreen.tsx";
 import { screen } from "./src/enum/screen.ts";
@@ -68,7 +68,6 @@ function App() {
   }
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <MagicModalPortal />
       <NavigationContainer>
         <Stack.Navigator initialRouteName={screen.Login}>
           {login && (
@@ -145,6 +144,7 @@ function App() {
           )}
         </Stack.Navigator>
       </NavigationContainer>
+      <MagicModalPortal />
     </GestureHandlerRootView>
   );
 }
