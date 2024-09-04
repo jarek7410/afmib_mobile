@@ -10,7 +10,7 @@ import { addCodeToHistory } from "./history.ts";
 export const saveCodeJoin = async (codeJoin: codejoinDTO) => {
   await AsyncStorage.setItem("@codeJoin", JSON.stringify(codeJoin));
   if(codeJoin.code != null){
-    addCodeToHistory(codeJoin.code);
+    await addCodeToHistory(codeJoin.code);
   }
 };
 export const getCodeJoin = async (): Promise<string | null> => {

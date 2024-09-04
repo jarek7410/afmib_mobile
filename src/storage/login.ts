@@ -4,11 +4,19 @@ import { loginDTO } from "./dto.ts";
 export const setLoginData = async (login: loginDTO): Promise<void> => {
   await AsyncStorage.setItem("@login", JSON.stringify(login));
   await AsyncStorage.setItem("@token", login.token);
+  await AsyncStorage.setItem("@name", login.name);
 };
 export const logout = async () => {
   await AsyncStorage.removeItem("@login");
   await AsyncStorage.removeItem("@token");
+  await AsyncStorage.removeItem("@name");
 };
+
+export const getLogin = async (): Promise<string> => {
+  const login = await AsyncStorage.getItem("@name");
+  return login != null ? JSON.parse(login) : "";
+};
+
 export const getLoginData = async (): Promise<loginDTO | null> => {
   const login = await AsyncStorage.getItem("@login");
   return login != null ? JSON.parse(login) : null;

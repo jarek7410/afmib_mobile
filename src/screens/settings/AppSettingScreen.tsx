@@ -7,8 +7,11 @@ import { logout as Logout } from "../../storage/login.ts";
 import Button from "../../components/Button";
 import { style } from "../../styles/loginRegisterStyle.ts";
 import { getMyObjects } from "../../api/getMe.ts";
-import { MeDataDto } from "../../storage/dto.ts";
+import { MeDataDto, saveMeDataDto } from "../../storage/dto.ts";
 import { clearDB, dbOptions } from "../../storage/dbOptions.ts";
+import { setMyObjects } from "../../api/saveMe.ts";
+import { handleQuickModal } from "../../handler/Modalhandler.ts";
+import { QuickModal } from "../../components/popup";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Settings>;
 
@@ -45,7 +48,18 @@ export const AppSettingScreen = ({ route }: Props) => {
     });
   };
   const save = () => {
-    console.log("save");
+    const myObjects: saveMeDataDto = {
+      pid: PID,
+      name: name,
+      surname: surname,
+      email: email,
+    }
+    setMyObjects(myObjects).then(r => {
+        if (r){
+          handleQuickModal(<QuickModal text={ "Data saved successfully"}/>,2000)
+        }
+      })
+
   };
   return (
     <SafeAreaView style={[style.centralizeContainer]}>
