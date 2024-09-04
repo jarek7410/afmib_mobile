@@ -9,7 +9,7 @@ export const QuickModal = ({ text }: { text: string }) => {
     <View style={styles.container}>
       <Text>{text}</Text>
       <Pressable onPress={() => hide("close")} style={styles.buttonContainer}>
-        <Text>Close Modal</Text>
+        <Text>Close</Text>
       </Pressable>
     </View>
   );
