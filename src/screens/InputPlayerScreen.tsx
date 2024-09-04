@@ -16,7 +16,7 @@ import { getPair } from "../api/getPair.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.InputPlayer>;
 
-export const InputPlayerScreen = ({ navigation }: Props) => {
+export const InputPlayerScreen = ({ navigation,route }: Props) => {
   const [section, setSection] = React.useState(1);
   const [table, setTable] = React.useState(1);
   const [round, setRound] = React.useState(1);
@@ -56,7 +56,8 @@ export const InputPlayerScreen = ({ navigation }: Props) => {
             getPair().then(pair => {
               console.log("pair: ", pair);
               savePairNumber(pair);
-              navigation.navigate(screen.Summary);
+              // navigation.navigate(screen.Summary);
+              route.params.join();
               navigation.reset({ routes: [{ name: screen.Summary }] });
             });
           });

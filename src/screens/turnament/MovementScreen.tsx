@@ -24,51 +24,52 @@ export const MovementScreen = ({}: Props) => {
   return (
     <SafeAreaView style={style.container}>
       <ScrollView>
-        {movement
-          .sort((a, b) => {
-            if (a.section < b.section) {
-              return -1;
-            }
-            if (a.section > b.section) {
-              return 1;
-            }
-            if (a.round < b.round) {
-              return -1;
-            }
-            if (a.round > b.round) {
-              return 1;
-            }
-            //this should not happen
-            if (a.table < b.table) {
-              return -1;
-            }
-            if (a.table > b.table) {
-              return 1;
-            }
-            return 0;
-          })
-          .map((mov, index) => {
-            return (
-              <View style={style.card} key={index}>
-                <View style={style.horizontal}>
-                  <View style={style.cardText}>
-                    <Text style={style.text}>section: {mov.section}</Text>
-                    <Text style={style.text}>round: {mov.round}</Text>
-                    <Text style={style.text}>table: {mov.table}</Text>
+        {movement &&
+          movement
+            .sort((a, b) => {
+              if (a.section < b.section) {
+                return -1;
+              }
+              if (a.section > b.section) {
+                return 1;
+              }
+              if (a.round < b.round) {
+                return -1;
+              }
+              if (a.round > b.round) {
+                return 1;
+              }
+              //this should not happen
+              if (a.table < b.table) {
+                return -1;
+              }
+              if (a.table > b.table) {
+                return 1;
+              }
+              return 0;
+            })
+            .map((mov, index) => {
+              return (
+                <View style={style.card} key={index}>
+                  <View style={style.horizontal}>
+                    <View style={style.cardText}>
+                      <Text style={style.text}>section: {mov.section}</Text>
+                      <Text style={style.text}>round: {mov.round}</Text>
+                      <Text style={style.text}>table: {mov.table}</Text>
+                    </View>
+                    <View style={style.cardText}>
+                      <Text style={style.text}>
+                        board: {mov.lowBoard}-{mov.highBoard}
+                      </Text>
+                      <Text style={style.text}>
+                        pairs: {mov.nsPair} vs {mov.ewPair}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={style.cardText}>
-                    <Text style={style.text}>
-                      board: {mov.lowBoard}-{mov.highBoard}
-                    </Text>
-                    <Text style={style.text}>
-                      pairs: {mov.nsPair} vs {mov.ewPair}
-                    </Text>
-                  </View>
+                  <Text style={style.text}>{mov.UpdatedAt}</Text>
                 </View>
-                <Text style={style.text}>{mov.UpdatedAt}</Text>
-              </View>
-            );
-          })}
+              );
+            })}
       </ScrollView>
     </SafeAreaView>
   );

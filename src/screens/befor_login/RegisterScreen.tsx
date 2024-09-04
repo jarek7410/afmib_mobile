@@ -6,8 +6,9 @@ import { RootStackParamList } from "../rootStats.ts";
 import { style } from "../../styles/loginRegisterStyle.ts";
 import { Colors } from "../../styles/Colors.ts";
 import Button from "../../components/Button";
-import { getServerURL } from "../../storage/login.ts";
 import { register } from "../../api/register.ts";
+import { handleQuickModal } from "../../handler/Modalhandler.ts";
+import { QuickModal } from "../../components/popup";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Register>;
 
@@ -20,12 +21,20 @@ export const RegisterScreen = ({ navigation }: Props) => {
 
   const registerButtonAction = () => {
     console.log("register: " + username + " " + email);
-    getServerURL().then(url => console.log(url + "auth/user/register"));
 
-    register(username, email, password).then(() => {
-      console.log("register success");
-      navigation.goBack();
-    });
+    register(username, email, password)
+      .then(() => {
+        console.log("register success");
+        navigation.goBack();
+      })
+      .catch(() => {
+        handleQuickModal(
+          <QuickModal
+            text={"register failed\ntry different username or email"}
+          />,
+          3000,
+        );
+      });
   };
 
   return (

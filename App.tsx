@@ -1,4 +1,5 @@
 // In App.js in a new project
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -20,6 +21,7 @@ import { getToken } from "./src/storage/login.ts";
 import { LoadingScreen } from "./src/screens/LoadingScreen.tsx";
 import Button from "./src/components/Button";
 import Text from "./src/components/Text/index.ts";
+import { MagicModalPortal } from "react-native-magic-modal";
 // import Icon from "react-native-vector-icons/AntDesign";
 
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -28,6 +30,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function App() {
   const [login, setLogin] = useState<boolean | null>(null);
+  const [isJoin, setIsJoin] = useState<boolean>(false);
 
   useEffect(() => {
     getToken().then(jwt => {
@@ -48,67 +51,101 @@ function App() {
       setLogin(true);
     } else {
       console.log("App,loginActin: no jwt");
+      throw new Error("no jwt");
     }
   };
+  const joinToTournamtnt = () => {
+    console.log("join to tournament ");
+    setIsJoin(true);
+  };
+  const exitTournament = () => {
+    console.log("exit tournament");
+    setIsJoin(false);
+  };
+
   if (login === null) {
     return <LoadingScreen />;
   }
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={screen.Login}>
-        {login && (
-          <Stack.Group
-          // initialRouteName={screen.Home}
-          >
-            <Stack.Screen
-              name={screen.Home}
-              options={({ navigation }) => ({
-                headerRight: () => (
-                  <Button
-                    style={{ width: 75 }}
-                    onPress={() => navigation.navigate(screen.Settings)}>
-                    <Text>settings</Text>
-                  </Button>
-                ),
-              })}
-              component={HomeScreen}
-            />
-            <Stack.Screen name={screen.CodeJoin} component={CodeJoinScreen} />
-            <Stack.Screen
-              name={screen.InputPlayer}
-              component={InputPlayerScreen}
-            />
-            <Stack.Screen name={screen.Summary} component={SummaryScreen} />
-            <Stack.Screen
-              name={screen.InfoReceiver}
-              component={InfoReceiverScreen}
-            />
-            <Stack.Screen name={screen.Movement} component={MovementScreen} />
-            <Stack.Screen name={screen.InputData} component={InputDataScreen} />
-            <Stack.Screen
-              name={screen.Settings}
-              component={AppSettingScreen}
-              initialParams={{ logout: loginToApp }}
-            />
-          </Stack.Group>
-        )}
-        {!login && (
-          <Stack.Group>
-            <Stack.Screen
-              name={screen.Login}
-              component={LoginScreen}
-              initialParams={{ login: loginAction }}
-            />
-            <Stack.Screen name={screen.Register} component={RegisterScreen} />
-            <Stack.Screen
-              name={screen.Loading}
-              component={LoadingScreen}
-              options={{ headerShown: false }}
-            />
-          </Stack.Group>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={screen.Login}>
+          {login && (
+            <>
+              {!isJoin && (
+                <Stack.Group>
+                  <Stack.Screen
+                    name={screen.Home}
+                    options={({ navigation }) => ({
+                      headerRight: () => (
+                        <Button
+                          style={{ width: 75 }}
+                          onPress={() => navigation.navigate(screen.Settings)}>
+                          <Text>settings</Text>
+                        </Button>
+                      ),
+                    })}
+                    component={HomeScreen}
+                  />
+                  <Stack.Screen
+                    name={screen.CodeJoin}
+                    component={CodeJoinScreen}
+                  />
+                  <Stack.Screen
+                    name={screen.InputPlayer}
+                    component={InputPlayerScreen}
+                    initialParams={{ join: joinToTournamtnt }}
+                  />
+                </Stack.Group>
+              )}
+              {isJoin && (
+                <Stack.Group>
+                  <Stack.Screen
+                    name={screen.Summary}
+                    component={SummaryScreen}
+                    initialParams={{ exit: exitTournament }}
+                  />
+
+                  <Stack.Screen
+                    name={screen.InfoReceiver}
+                    component={InfoReceiverScreen}
+                  />
+                  <Stack.Screen
+                    name={screen.Movement}
+                    component={MovementScreen}
+                  />
+                  <Stack.Screen
+                    name={screen.InputData}
+                    component={InputDataScreen}
+                  />
+                </Stack.Group>
+              )}
+              <Stack.Screen
+                name={screen.Settings}
+                component={AppSettingScreen}
+                initialParams={{ logout: loginToApp }}
+              />
+            </>
+          )}
+          {!login && (
+            <Stack.Group>
+              <Stack.Screen
+                name={screen.Login}
+                component={LoginScreen}
+                initialParams={{ login: loginAction }}
+              />
+              <Stack.Screen name={screen.Register} component={RegisterScreen} />
+              <Stack.Screen
+                name={screen.Loading}
+                component={LoadingScreen}
+                options={{ headerShown: false }}
+              />
+            </Stack.Group>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+      <MagicModalPortal />
+    </GestureHandlerRootView>
   );
 }
 

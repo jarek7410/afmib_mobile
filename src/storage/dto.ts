@@ -14,6 +14,14 @@ export interface MeDataDto {
   name: string;
   surname: string;
 }
+
+export interface saveMeDataDto {
+  email: string;
+  pid: string;
+  name: string;
+  surname: string;
+}
+
 export interface tableJoinDTO {
   section: number;
   table: number;
