@@ -1,9 +1,11 @@
 this application is mobile part of system for brige turnamert
 
-# Screens in applicanion plan:
+# Screens in application plan:
 
 ![photo of screen structure](diagrams/screens.svg)
 
+# Screens in application:
+[figma](https://www.figma.com/design/Svrx2rvKXsyKli6MPL4Amt/Untitled?node-id=0-1&t=R6uFk5k57vJYL9Hc-1)
 
 # Getting Started
 
