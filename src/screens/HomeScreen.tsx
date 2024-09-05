@@ -9,6 +9,7 @@ import { Colors } from "../styles/Colors.ts";
 import { getMyObjects } from "../api/getMe.ts";
 import { getCodeHistoryWithDates } from "../storage/history.ts";
 import { codeWithDate } from "../storage/dto.ts";
+import { saveCodeJoin } from "../storage/tournament.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Home>;
 
@@ -52,39 +53,52 @@ export const HomeScreen = ({ navigation }: Props) => {
         justifyContent: "center",
       }}>
       <ScrollView>
-        {codeHistory.map((code, index) => {
-          // const date =
-          //   code.date.toDateString() + " " + code.date.toTimeString();
-          return (
-            <View style={style.card} key={index}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                }}>
-                <View>
-                  <Text>{code.code}</Text>
-                  <Text>
-                    {code.date.getFullYear() +
-                      "." +
-                      (code.date.getMonth() + 1) +
-                      "." +
-                      code.date.getDay() +
-                      " " +
-                      code.date.getHours() +
-                      ":" +
-                      code.date.getMinutes()}
-                  </Text>
+        {codeHistory
+          .sort((a, b) => {
+            if (a.date < b.date) {
+              return 1;
+            }
+            if (a.date > b.date) {
+              return -1;
+            }
+            return 0;
+          })
+          .map((code, index) => {
+            // const date =
+            //   code.date.toDateString() + " " + code.date.toTimeString();
+            return (
+              <View style={style.card} key={index}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
+                  }}>
+                  <View>
+                    <Text>{code.code}</Text>
+                    <Text>
+                      {code.date.getFullYear() +
+                        "." +
+                        (code.date.getMonth() + 1) +
+                        "." +
+                        (code.date.getDay() + 1) +
+                        " " +
+                        code.date.getHours() +
+                        ":" +
+                        code.date.getMinutes()}
+                    </Text>
+                  </View>
+                  <Button
+                    style={{ width: 100 }}
+                    title={"rejoin"}
+                    onPress={() => {
+                      saveCodeJoin({ code: code.code });
+                      navigation.navigate(screen.InputPlayer);
+                    }}
+                  />
                 </View>
-                <Button
-                  style={{ width: 100 }}
-                  title={"rejoin"}
-                  onPress={() => {}}
-                />
               </View>
-            </View>
-          );
-        })}
+            );
+          })}
       </ScrollView>
       <View
         style={{

@@ -8,7 +8,11 @@ export const addCodeToHistory = async (code: string) => {
       return "";
     }
     return login.name;
-  })
+  });
+  if (code == "") {
+    console.log("empty code");
+    return;
+  }
   console.log("name", name);
   const codes = await getCodeHistoryWithDates();
   const date = new Date();
