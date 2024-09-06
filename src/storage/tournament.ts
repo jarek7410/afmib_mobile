@@ -9,10 +9,13 @@ import { addCodeToHistory } from "./history.ts";
 
 export const saveCodeJoin = async (codeJoin: codejoinDTO) => {
   await AsyncStorage.setItem("@codeJoin", JSON.stringify(codeJoin));
-  if(codeJoin.code != null){
+  if (codeJoin.code != null) {
     await addCodeToHistory(codeJoin.code);
   }
 };
+/**
+ * @returns codeJoin can be null, and it signals that the app is in wrong state
+ */
 export const getCodeJoin = async (): Promise<string | null> => {
   const codeJoin = await AsyncStorage.getItem("@codeJoin");
   return codeJoin != null ? JSON.parse(codeJoin).code : null;
@@ -28,11 +31,13 @@ export const saveTournament = async (tournament: tournamentDTO) => {
     JSON.stringify(tournament),
   );
 };
-export const getTournament = async (): Promise<tournamentDTO | null> => {
+export const getTournament = async (): Promise<tournamentDTO> => {
   const tournament = await AsyncStorage.getItem(
     (await getCodeJoin()) + "@tournament",
   );
-  return tournament != null ? JSON.parse(tournament) : null;
+  return tournament != null
+    ? JSON.parse(tournament)
+    : { ID: 0, name: "", creator_id: "", code_id: "" }; //maybe should be null
 };
 
 export const saveTableJoin = async (tableJoin: tableJoinDTO) => {

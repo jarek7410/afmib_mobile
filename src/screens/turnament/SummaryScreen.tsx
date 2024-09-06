@@ -3,16 +3,23 @@ import { Button, StyleSheet, Text, Vibration, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../rootStats.ts";
 import { screen } from "../../enum/screen.ts";
-import { getCodeJoin, getPairNumber, saveCodeJoin } from "../../storage/tournament.ts";
+import {
+  getCodeJoin,
+  getPairNumber, getTournament,
+  saveCodeJoin
+} from "../../storage/tournament.ts";
 import { Colors } from "../../styles/Colors.ts";
 import { getServerURL, getToken } from "../../storage/login.ts";
+import { messageWS, tournamentDTO } from "../../storage/dto.ts";
+import { setNewestMessage } from "../../storage/messages.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Summary>;
 
-export const SummaryScreen = ({ navigation,route }: Props) => {
+export const SummaryScreen = ({ navigation, route }: Props) => {
   const [pairNumber, setPairNumber] = React.useState<number>(0);
   const [message, setMessage] = React.useState<string>("");
   const [webSocket, setWebSocket] = React.useState<WebSocket | null>(null);
+  const [torurnament,setTournament] = React.useState<tournamentDTO>({ ID: 0, code_id: 0, creator_id: 0, name: "" });
   useEffect(() => {
     const initializeWebSocket = async () => {
       try {
@@ -38,11 +45,16 @@ export const SummaryScreen = ({ navigation,route }: Props) => {
           };
 
           ws.onmessage = event => {
-            console.log("Received message:", event.data);
-            if (event.data === "vibrate") {
+            const data: messageWS = JSON.parse(event.data);
+            console.log("Received message:", typeof event.data);
+            if (data.type === "vibrate") {
               Vibration.vibrate();
             }
-            setMessage(event.data);
+            console.log("ws", data.message, data.message.length !== 0);
+            if (data.message.length !== 0) {
+              setMessage(data.message);
+            }
+            setNewestMessage(data);
           };
 
           ws.onerror = error => {
@@ -72,6 +84,13 @@ export const SummaryScreen = ({ navigation,route }: Props) => {
     };
   }, []);
   useEffect(() => {
+    getTournament().then(t => {
+      if (t != null) {
+        setTournament(t);
+      }
+    });
+  }, []);
+  useEffect(() => {
     getPairNumber().then(pn => {
       if (pn != null) {
         setPairNumber(pn);
@@ -81,7 +100,7 @@ export const SummaryScreen = ({ navigation,route }: Props) => {
   return (
     <View>
       <View>
-        <Text style={style.text}>Info receiver</Text>
+        <Text style={style.text}>{torurnament.name}</Text>
         <Text style={style.text}>Pair number: {pairNumber}</Text>
         <View style={style.messageBox}>
           <Text style={style.text}>{message}</Text>
