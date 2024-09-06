@@ -17,20 +17,26 @@ export const getLogin = async (): Promise<string> => {
   return login != null ? JSON.parse(login) : "";
 };
 
-export const getLoginData = async (): Promise<loginDTO | null> => {
+export const getLoginData = async (): Promise<loginDTO> => {
   const login = await AsyncStorage.getItem("@login");
-  return login != null ? JSON.parse(login) : null;
+  return login != null ? JSON.parse(login) : "";
 };
+
+
+/**
+ * token is used to authenticate the user
+ * @returns token can be null and it signals that the user is not logged in
+ */
 export const getToken = async (): Promise<string | null> => {
   return await AsyncStorage.getItem("@token");
 };
 export const getServerURL = async (): Promise<string> => {
   const url = await AsyncStorage.getItem("@serverURL");
   if (url === null) {
-    return "http://192.168.0.110:2137/";
+    return "http://192.168.0.118:2137/";
   }
   return url;
 };
-export const setServerURL = async (url: string): Promise<void> => {
+export const setServerURL = async (url: string) => {
   await AsyncStorage.setItem("@serverURL", url);
 };

@@ -49,6 +49,17 @@ export interface codeWithDate {
   code: string;
   date: Date;
 }
+export interface messageForHistory {
+  ID: string;
+  message: string;
+  type: string;
+  date: Date;
+}
+export interface messageWS {
+  ID: string;
+  message: string;
+  type: string;
+}
 export interface movementDTO {
   CreatedAt: string;
   UpdatedAt: string;
