@@ -1,0 +1,11 @@
+{
+  "greeting": "Hello, {name}!",
+  "rejoin": "Rejoin",
+  "settings": {
+    "language": "Language",
+    "settings": "Settings"
+  },
+  "code": "code: ",
+
+  "joinBycode": "join by code"
+}

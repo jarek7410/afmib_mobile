@@ -6,6 +6,7 @@ import {
   tournamentDTO,
 } from "./dto.ts";
 import { addCodeToHistory } from "./history.ts";
+import { getMovement } from "../api/getMovement.ts";
 
 export const saveCodeJoin = async (codeJoin: codejoinDTO) => {
   await AsyncStorage.setItem("@codeJoin", JSON.stringify(codeJoin));
@@ -76,5 +77,10 @@ export const getMovementData = async (): Promise<movementDTO[]> => {
   const movementData = await AsyncStorage.getItem(
     (await getCodeJoin()) + "@movementData",
   );
-  return movementData != null ? JSON.parse(movementData) : [];
+  if (movementData != null) {
+    return JSON.parse(movementData);
+  }
+  const movementDataNew = await getMovement();
+  saveMovementData(movementDataNew);
+  return movementDataNew;
 };

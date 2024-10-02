@@ -2,6 +2,9 @@ import { getServerURL, getToken } from "../storage/login.ts";
 import { MeDataDto } from "../storage/dto.ts";
 
 export const getMyObjects = async () => {
+  if ((await getToken()) === null) {
+    throw new Error("no login user");
+  }
   return fetch((await getServerURL()) + "api/me", {
     headers: {
       Authorization: "Bearer " + (await getToken()),

@@ -5,7 +5,6 @@ import { RootStackParamList } from "../rootStats.ts";
 import { screen } from "../../enum/screen.ts";
 import { movementDTO } from "../../storage/dto.ts";
 import { Colors } from "../../styles/Colors.ts";
-import { getMovement } from "../../api/getMovement.ts";
 import { getMovementData, saveMovementData } from "../../storage/tournament.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Movement>;
@@ -13,7 +12,7 @@ type Props = NativeStackScreenProps<RootStackParamList, screen.Movement>;
 export const MovementScreen = ({}: Props) => {
   const [movement, setMovement] = React.useState<movementDTO[]>([]);
   useEffect(() => {
-    getMovement().then(mov => {
+    getMovementData().then(mov => {
       saveMovementData(mov).then(() => {
         getMovementData().then(mov => {
           setMovement(mov);
@@ -62,7 +61,7 @@ export const MovementScreen = ({}: Props) => {
                         board: {mov.lowBoard}-{mov.highBoard}
                       </Text>
                       <Text style={style.text}>
-                        pairs: {mov.nsPair} vs {mov.ewPair}
+                        pairs: NS-{mov.nsPair} vs EW-{mov.ewPair}
                       </Text>
                     </View>
                   </View>

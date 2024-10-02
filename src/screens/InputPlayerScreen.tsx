@@ -49,6 +49,7 @@ export const InputPlayerScreen = ({ navigation,route }: Props) => {
       <Button
         title={"Select"}
         onPress={() => {
+          //TODO: to much to do in ui
           joinTournament().then(tourn => {
             saveTournament(tourn);
           });

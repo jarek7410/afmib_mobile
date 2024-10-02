@@ -1,12 +1,13 @@
 @startuml
-State B as "befor login"{
+State B as "_"{
     state B1 as "login"
     state B2 as "register"
- B1 -> B2
  B2 -> B1
+ B1 -> B2
 }
 
-B1 --> A1:guest is consider\n a login user
+A1 -> B1:guest is consider\n a login user
+A1 <- B1
 'State A as "after login"{
 state A1 as "home"
 state A3 as "code join"
@@ -14,11 +15,12 @@ state C as "settings"{
     state C1 as "profile"
     state C2 as "app"
 }
-[*]->C : from close to all point in app
+'[*]->C : from close to all point in app
 state A4 as "input yourself"
       A4 :you add  table and position
       A4 : add name, cid, ect when you as a guest (for future)
-C -> B1
+C -> A1
+C <- A1
  A3 --> A4
  A4 -->D
  A1 -> A3

@@ -33,7 +33,7 @@ export const getToken = async (): Promise<string | null> => {
 export const getServerURL = async (): Promise<string> => {
   const url = await AsyncStorage.getItem("@serverURL");
   if (url === null) {
-    return "http://192.168.0.118:2137/";
+    return "http://192.168.88.219:2137/";
   }
   return url;
 };

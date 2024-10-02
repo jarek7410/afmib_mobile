@@ -1,12 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Button, StyleSheet, Text, Vibration, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../rootStats.ts";
 import { screen } from "../../enum/screen.ts";
 import {
   getCodeJoin,
-  getPairNumber, getTournament,
-  saveCodeJoin
+  getPairNumber,
+  getTournament,
+  saveCodeJoin,
 } from "../../storage/tournament.ts";
 import { Colors } from "../../styles/Colors.ts";
 import { getServerURL, getToken } from "../../storage/login.ts";
@@ -19,13 +20,18 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
   const [pairNumber, setPairNumber] = React.useState<number>(0);
   const [message, setMessage] = React.useState<string>("");
   const [webSocket, setWebSocket] = React.useState<WebSocket | null>(null);
-  const [torurnament,setTournament] = React.useState<tournamentDTO>({ ID: 0, code_id: 0, creator_id: 0, name: "" });
+  const [torurnament, setTournament] = React.useState<tournamentDTO>({
+    ID: 0,
+    code_id: 0,
+    creator_id: 0,
+    name: "",
+  });
   useEffect(() => {
     const initializeWebSocket = async () => {
       try {
         // Retrieve the URL from AsyncStorage
         const url = await getServerURL();
-        const token = await getToken();
+        // const token = await getToken();
         const code = await getCodeJoin();
         const pairNumber = await getPairNumber();
 
@@ -34,9 +40,9 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
           const ws = new WebSocket(
             url + "api/ws/" + code + "/" + pairNumber,
             null,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            },
+            // {
+            //   headers: { Authorization: `Bearer ${token}` },
+            // },
           );
 
           // Set up WebSocket event listeners
@@ -50,7 +56,8 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
             if (data.type === "vibrate") {
               Vibration.vibrate();
             }
-            console.log("ws", data.message, data.message.length !== 0);
+            // console.log("ws", data.message, data.message.length !== 0);
+            console.log(data);
             if (data.message.length !== 0) {
               setMessage(data.message);
             }

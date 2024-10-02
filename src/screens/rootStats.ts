@@ -1,9 +1,9 @@
 export type RootStackParamList = {
   Home: undefined;
-  Login: { login: () => Promise<void> };
+  Login: undefined;
   Register: undefined;
   CodeJoin: undefined;
-  Settings: { logout: () => void };
+  Settings: undefined;
   InputPlayer: { join: () => void };
   Summary: { exit: () => void };
   InfoReceiver: undefined;

@@ -1,0 +1,10 @@
+{
+  "greeting": "witaj, {name}!",
+  "rejoin": "dołącz ponownie",
+  "settings": {
+    "language": "Język",
+    "settings": "Ustawienia"
+  },
+  "code": "Kod: ",
+  "joinBycode": "dołacz urzywając kodu"
+}
