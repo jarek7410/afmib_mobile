@@ -14,7 +14,7 @@ export const sendPlayerNames = async (playerNames: sendPlayerNameDTO[]) => {
     table: tableJoin.table,
   };
   await fetch(
-    (await getServerURL()) + "api/playernames/" + (await getCodeJoin()),
+    (await getServerURL()) + "api/view/playernames/" + (await getCodeJoin()),
     {
       headers: {
         Authorization: "Bearer " + (await getToken()),

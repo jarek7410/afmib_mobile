@@ -7,7 +7,7 @@ import { HomeScreen } from "./src/screens/HomeScreen.tsx";
 import { screen } from "./src/enum/screen.ts";
 import { createStackNavigator } from "@react-navigation/stack";
 import { RootStackParamList } from "./src/screens/rootStats.ts";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { CodeJoinScreen } from "./src/screens/CodeJoinScreen.tsx";
 import { InputPlayerScreen } from "./src/screens/InputPlayerScreen.tsx";
 import { SummaryScreen } from "./src/screens/turnament/SummaryScreen.tsx";
@@ -19,6 +19,10 @@ import Button from "./src/components/Button";
 import Text from "./src/components/Text/index.ts";
 import { MagicModalPortal } from "react-native-magic-modal";
 import { useTranslation } from "react-i18next";
+import { UserSettingsScreen } from "./src/screens/settings/userSettings.tsx";
+import { LoginScreen, RegisterScreen } from "./src/screens/befor_login";
+import i18next from "i18next";
+import { getLangue } from "./src/storage/langue.ts";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -27,28 +31,11 @@ function App() {
   // const [login, setLogin] = useState<boolean | null>(null);
   const [isJoin, setIsJoin] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   getToken().then(jwt => {
-  //     if (jwt != null) {
-  //       setLogin(true);
-  //     } else {
-  //       setLogin(false);
-  //     }
-  //   });
-  // }, []);
-  //
-  // const loginToApp = () => {
-  //   console.log("logout");
-  //   // setLogin(false);
-  // };
-  // const loginAction = async () => {
-  //   if ((await getToken()) != null) {
-  //     setLogin(true);
-  //   } else {
-  //     console.log("App,loginActin: no jwt");
-  //     throw new Error("no jwt");
-  //   }
-  // };
+  useEffect(() => {
+    (async()=> {
+      i18next.changeLanguage(await getLangue());
+    })()
+  }, []);
   const joinToTournamtnt = () => {
     console.log("join to tournament ");
     setIsJoin(true);
@@ -112,6 +99,15 @@ function App() {
             component={AppSettingScreen}
             // initialParams={{ logout: loginToApp }}
           />
+          <Stack.Screen
+            name={"UserSettings"}
+            component={UserSettingsScreen}
+            // initialParams={{ logout: loginToApp }}
+          />
+          <Stack.Group>
+            <Stack.Screen name={"Login"} component={LoginScreen} />
+            <Stack.Screen name={"Register"} component={RegisterScreen} />
+          </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
       <MagicModalPortal />

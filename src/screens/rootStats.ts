@@ -11,4 +11,5 @@ export type RootStackParamList = {
   InputData: undefined;
   Loading: undefined;
   Tournament: undefined;
+  UserSettings: undefined;
 };

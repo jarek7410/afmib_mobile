@@ -13,6 +13,7 @@ import {
   useCameraPermission,
   useCodeScanner,
 } from "react-native-vision-camera";
+import { InputPlayerScreen } from "./InputPlayerScreen.tsx";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.CodeJoin>;
 
@@ -121,7 +122,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
   };
   const codeJoin = () => {
     saveCodeJoin({ code });
-    navigation.navigate(screen.InputPlayer);
+    navigation.navigate("InputPlayer");
   };
   return (
     <View

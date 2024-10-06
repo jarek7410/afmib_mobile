@@ -11,6 +11,11 @@ export const logout = async () => {
   await AsyncStorage.removeItem("@token");
   await AsyncStorage.removeItem("@name");
 };
+export const isLogin = () => {
+  return AsyncStorage.getItem("@token").then(token => {
+    return token != null;
+  });
+}
 
 export const getLogin = async (): Promise<string> => {
   const login = await AsyncStorage.getItem("@name");
@@ -33,7 +38,7 @@ export const getToken = async (): Promise<string | null> => {
 export const getServerURL = async (): Promise<string> => {
   const url = await AsyncStorage.getItem("@serverURL");
   if (url === null) {
-    return "http://192.168.88.219:2137/";
+    return "http://192.168.124.219:2137/";
   }
   return url;
 };

@@ -5,6 +5,17 @@
     "language": "Język",
     "settings": "Ustawienia"
   },
+  "language":{
+    "pl": "Polski",
+    "en": "Angielski"
+  },
+  "changeUserData": "Zmień swoje dane",
   "code": "Kod: ",
-  "joinBycode": "dołacz urzywając kodu"
+  "joinBycode": "dołacz urzywając kodu",
+  "login": "Zaloguj",
+  "logout": "Wyloguj",
+  "movement": "przejścia",
+  "exitTournament": "wyjdz z turnieju",
+  "playersNames": "nazwy graczy",
+  "infoReciveer": "informacje"
 }

@@ -6,6 +6,12 @@
     "settings": "Settings"
   },
   "code": "code: ",
-
-  "joinBycode": "join by code"
+  "language":{
+    "pl": "Polish",
+    "en": "English"
+  },
+  "joinBycode": "join by code",
+  "changeUserData": "change your data",
+  "login": "Login",
+  "logout": "logout"
 }

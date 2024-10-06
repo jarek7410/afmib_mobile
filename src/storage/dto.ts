@@ -77,3 +77,11 @@ export interface movementDTO {
   customNsPair: number;
   customEWPair: number;
 }
+export interface settings {
+  chooseSector: boolean;
+  pairJoin: boolean;
+  singeJoin: boolean;
+  tableJoin: boolean;
+  defaultSector: number;
+  helloMessage: string;
+}

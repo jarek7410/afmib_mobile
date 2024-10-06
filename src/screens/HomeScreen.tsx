@@ -12,7 +12,7 @@ import { saveCodeJoin } from "../storage/tournament.ts";
 import { getMyData } from "../storage/mydata.ts";
 import { useTranslation } from "react-i18next";
 
-type Props = NativeStackScreenProps<RootStackParamList, screen.Home>;
+type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export const HomeScreen = ({ navigation }: Props) => {
   const { t } = useTranslation();
@@ -97,7 +97,7 @@ export const HomeScreen = ({ navigation }: Props) => {
                     title={t("rejoin")}
                     onPress={() => {
                       saveCodeJoin({ code: code.code });
-                      navigation.navigate(screen.InputPlayer);
+                      navigation.navigate("InputPlayer");
                     }}
                   />
                 </View>

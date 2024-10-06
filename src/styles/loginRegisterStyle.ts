@@ -17,4 +17,9 @@ export const style = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.background,
   },
+  horizontalContainer: {
+    flexDirection: "row",
+    // justifyContent: "space-between",
+  },
+
 });

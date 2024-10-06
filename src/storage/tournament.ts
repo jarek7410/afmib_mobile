@@ -7,11 +7,13 @@ import {
 } from "./dto.ts";
 import { addCodeToHistory } from "./history.ts";
 import { getMovement } from "../api/getMovement.ts";
+import { GetTournamentSettings } from "../api/GetTournamentSettings.ts";
 
 export const saveCodeJoin = async (codeJoin: codejoinDTO) => {
   await AsyncStorage.setItem("@codeJoin", JSON.stringify(codeJoin));
   if (codeJoin.code != null) {
     await addCodeToHistory(codeJoin.code);
+    await GetTournamentSettings();
   }
 };
 /**

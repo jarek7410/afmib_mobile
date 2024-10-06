@@ -5,7 +5,7 @@ import { movementDTO } from "../storage/dto.ts";
 export const getMovement = async (): Promise<movementDTO[]> => {
   return await fetch(
     (await getServerURL()) +
-      "api/tournament/" +
+      "api/view/tournament/" +
       (await getCodeJoin()) +
       "/" +
       (await getPairNumber()),
@@ -13,7 +13,7 @@ export const getMovement = async (): Promise<movementDTO[]> => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + (await getToken()),
+        // Authorization: "Bearer " + (await getToken()),
       },
     },
   )

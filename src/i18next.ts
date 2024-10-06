@@ -2,6 +2,7 @@ import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 import en from "./translations/en/translation.json";
 import pl from "./translations/pl/translation.json";
+import { getLangue } from "./storage/langue.ts";
 
 i18next
   .use(initReactI18next)

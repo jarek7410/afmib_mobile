@@ -13,10 +13,13 @@ import { Colors } from "../../styles/Colors.ts";
 import { getServerURL, getToken } from "../../storage/login.ts";
 import { messageWS, tournamentDTO } from "../../storage/dto.ts";
 import { setNewestMessage } from "../../storage/messages.ts";
+import { EventRegister } from "react-native-event-listeners";
+import { useTranslation } from "react-i18next";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Summary>;
 
 export const SummaryScreen = ({ navigation, route }: Props) => {
+  const { t } = useTranslation();
   const [pairNumber, setPairNumber] = React.useState<number>(0);
   const [message, setMessage] = React.useState<string>("");
   const [webSocket, setWebSocket] = React.useState<WebSocket | null>(null);
@@ -38,7 +41,7 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
         if (url) {
           // Initialize WebSocket with the retrieved URL
           const ws = new WebSocket(
-            url + "api/ws/" + code + "/" + pairNumber,
+            url + "api/view/ws/" + code + "/" + pairNumber,
             null,
             // {
             //   headers: { Authorization: `Bearer ${token}` },
@@ -55,6 +58,9 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
             console.log("Received message:", typeof event.data);
             if (data.type === "vibrate") {
               Vibration.vibrate();
+            }
+            if(data.type === "settings"){
+              EventRegister.emit("settings", data);
             }
             // console.log("ws", data.message, data.message.length !== 0);
             console.log(data);
@@ -113,25 +119,25 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
           <Text style={style.text}>{message}</Text>
         </View>
         <Button
-          title={"info reciveer"}
+          title={t("infoReciveer")}
           onPress={() => {
             navigation.navigate(screen.InfoReceiver);
           }}
         />
         <Button
-          title={"movement"}
+          title={t("movement")}
           onPress={() => {
             navigation.navigate(screen.Movement);
           }}
         />
         <Button
-          title={"input data"}
+          title={t("playersNames")}
           onPress={() => {
             navigation.navigate(screen.InputData);
           }}
         />
         <Button
-          title={"exit turnament"}
+          title={t("exitTournament")}
           onPress={() => {
             saveCodeJoin({ code: "" });
             // navigation.navigate(screen.Home);
