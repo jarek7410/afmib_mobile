@@ -1,6 +1,7 @@
 import { getCodeJoin } from "../storage/tournament.ts";
 import { getServerURL } from "../storage/login.ts";
 import { settings } from "../storage/dto.ts";
+import { setSettings } from "../storage/settings.ts";
 
 export const GetTournamentSettings = async () => {
   await fetch(
@@ -26,6 +27,7 @@ export const GetTournamentSettings = async () => {
     })
     .then((respJson: settings) => {
       console.log("settings:", respJson);
+      setSettings(respJson)
       // return respJson.pair_number;
     });
 };

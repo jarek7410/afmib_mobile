@@ -18,5 +18,10 @@
   "exitTournament": "wyjdz z turnieju",
   "playersNames": "nazwy graczy",
   "infoReciveer": "informacje",
-  "confirm": "zatwierdź"
+  "confirm": "zatwierdź",
+  "pidorzero": "pid albo puste",
+  "surname": "nazwisko",
+  "name": "Imie",
+  "firstPlayer": "pierwszy zawodnik:",
+  "secendPlayer": "drugi zawodnik"
 }

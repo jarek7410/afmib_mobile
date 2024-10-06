@@ -81,7 +81,7 @@ export const InputPlayerScreen = ({ navigation, route }: Props) => {
           });
           saveTableJoin({ section, table, round, is_ns: isNS }).then(() => {
             getPair().then(pair => {
-              console.log("pair: ", pair);
+              // console.log("pair: ", pair);
               savePairNumber(pair);
               // navigation.navigate(screen.Summary);
               route.params.join();

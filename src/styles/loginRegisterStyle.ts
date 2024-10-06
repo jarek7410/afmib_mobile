@@ -10,6 +10,7 @@ export const style = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     margin: 5,
+    backgroundColor:Colors.primary
   },
   centralizeContainer: {
     flex: 1,
@@ -21,5 +22,8 @@ export const style = StyleSheet.create({
     flexDirection: "row",
     // justifyContent: "space-between",
   },
-
+  text: {
+    fontSize: 20,
+    color: Colors.text,
+  },
 });

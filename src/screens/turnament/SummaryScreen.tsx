@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, StyleSheet, Text, Vibration, View } from "react-native";
+import { StyleSheet, Text, Vibration, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../rootStats.ts";
 import { screen } from "../../enum/screen.ts";
@@ -10,11 +10,13 @@ import {
   saveCodeJoin,
 } from "../../storage/tournament.ts";
 import { Colors } from "../../styles/Colors.ts";
+import Button from "../../components/Button";
 import { getServerURL, getToken } from "../../storage/login.ts";
 import { messageWS, tournamentDTO } from "../../storage/dto.ts";
 import { setNewestMessage } from "../../storage/messages.ts";
 import { EventRegister } from "react-native-event-listeners";
 import { useTranslation } from "react-i18next";
+import { retrivePairNumber } from "../../api/retrivePairNumber.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Summary>;
 
@@ -29,6 +31,10 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
     creator_id: 0,
     name: "",
   });
+  EventRegister.addEventListener("pairNumberRetrive",(pairNumber)=>{
+    setPairNumber(pairNumber)
+  })
+
   useEffect(() => {
     const initializeWebSocket = async () => {
       try {
@@ -105,14 +111,18 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
   }, []);
   useEffect(() => {
     getPairNumber().then(pn => {
-      if (pn != null) {
-        setPairNumber(pn);
+      if (pn == null) {
+        return
       }
+      if(pn==0){
+        retrivePairNumber()
+      }
+      setPairNumber(pn);
     });
   }, []);
   return (
     <View>
-      <View>
+      <View style={{alignItems:"center"}}>
         <Text style={style.text}>{torurnament.name}</Text>
         <Text style={style.text}>Pair number: {pairNumber}</Text>
         <View style={style.messageBox}>

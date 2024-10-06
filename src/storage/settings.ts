@@ -13,7 +13,7 @@ export const setSettings = async (settings: settings) => {
   );
 };
 export const getSettings = async (): Promise<settings | null> => {
-  return await AsyncStorage.getItem((await getCodeJoin()) + "@settings").then(
+  return await AsyncStorage.getItem((await getCodeJoin()) + "@Settings").then(
     setting => {
       if (setting != null) {
         return JSON.parse(setting);

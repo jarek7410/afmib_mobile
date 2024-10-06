@@ -21,7 +21,7 @@ export const getPair = async (): Promise<number> => {
       throw new Error("getPair failed: data grab");
     })
     .then((respJson: any) => {
-      console.log("Done.");
+      // console.log("Done.");
       return respJson.pair_number;
     });
 };
