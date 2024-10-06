@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./rootStats.ts";
 import { screen } from "../enum/screen.ts";
@@ -11,14 +11,17 @@ import {
   saveTableJoin,
   saveTournament,
 } from "../storage/tournament.ts";
+import Button from "../components/Button";
 import { joinTournament } from "../api/joinTournament.ts";
 import { getPair } from "../api/getPair.ts";
 import { settings } from "../storage/dto.ts";
 import { getSettings } from "../storage/settings.ts";
+import { useTranslation } from "react-i18next";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.InputPlayer>;
 
 export const InputPlayerScreen = ({ navigation, route }: Props) => {
+  const { t } = useTranslation();
   const [section, setSection] = React.useState(1);
   const [table, setTable] = React.useState(1);
   const [round, setRound] = React.useState(1);
@@ -40,7 +43,8 @@ export const InputPlayerScreen = ({ navigation, route }: Props) => {
     });
   }, []);
   return (
-    <View style={style.base}>
+    <SafeAreaView
+      style={[style.base, { justifyContent: "center", alignItems: "center" }]}>
       <View style={[style.center]}>
         <View style={style.horizontal}>
           <View style={{ justifyContent: "space-around" }}>
@@ -56,16 +60,20 @@ export const InputPlayerScreen = ({ navigation, route }: Props) => {
         </View>
         <Text>NS/EW:</Text>
         <View style={style.horizontal}>
-          <RadionButton onSelect={() => setIsNS(true)} state={isNS}>
-            <Text>NS</Text>
-          </RadionButton>
-          <RadionButton onSelect={() => setIsNS(false)} state={!isNS}>
-            <Text>EW</Text>
-          </RadionButton>
+          {isNS && (
+            <RadionButton onSelect={() => setIsNS(!isNS)} state={isNS}>
+              <Text>NS</Text>
+            </RadionButton>
+          )}
+          {!isNS && (
+            <RadionButton onSelect={() => setIsNS(!isNS)} state={!isNS}>
+              <Text>EW</Text>
+            </RadionButton>
+          )}
         </View>
       </View>
       <Button
-        title={"Select"}
+        title={t("confirm")}
         onPress={() => {
           //TODO: to much to do in ui
           joinTournament().then(tourn => {
@@ -85,8 +93,8 @@ export const InputPlayerScreen = ({ navigation, route }: Props) => {
       <Text>Section: {section}</Text>
       <Text>Table: {table}</Text>
       <Text>Round: {round}</Text>
-      <Text>isNS: {isNS}</Text>
-    </View>
+      <Text>isNS: {isNS ? "tak" : "nie"}</Text>
+    </SafeAreaView>
   );
 };
 
