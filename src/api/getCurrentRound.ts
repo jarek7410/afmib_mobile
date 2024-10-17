@@ -1,14 +1,15 @@
+import { PairStat } from "../storage/dto.ts";
+import { getServerURL } from "../storage/login.ts";
 import { getCodeJoin, getPairNumber } from "../storage/tournament.ts";
-import { getServerURL, getToken } from "../storage/login.ts";
-import { movementDTO } from "../storage/dto.ts";
 
-export const getMovement = async (): Promise<movementDTO[]> => {
+export const GetCurrentRound = async (): Promise<PairStat> => {
   return await fetch(
     (await getServerURL()) +
       "api/view/tournament/" +
       (await getCodeJoin()) +
-      "/" +
-      (await getPairNumber()),
+      "/pair/" +
+      (await getPairNumber()) +
+      "/round",
     {
       method: "GET",
       headers: {
@@ -21,11 +22,11 @@ export const getMovement = async (): Promise<movementDTO[]> => {
       if (response.ok) {
         return response.json();
       }
-      console.log("getMovement: response not ok");
+      console.log("getCurrentRoung: response not ok");
       throw new Error("getPair failed: data grab");
     })
-    .then((respJson: movementDTO[]) => {
-      console.log("getMovement", "Done.");
+    .then((respJson: PairStat) => {
+      console.log("getCurrentRoung", "Done.");
       return respJson;
     });
 };

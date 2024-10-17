@@ -1,42 +1,57 @@
-import React, { useEffect, useRef } from "react";
-import { Button, StyleSheet, Text, Vibration, View } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, Text, Vibration, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../rootStats.ts";
 import { screen } from "../../enum/screen.ts";
 import {
   getCodeJoin,
-  getPairNumber, getTournament,
-  saveCodeJoin
+  getPairNumber,
+  getTournament,
+  saveCodeJoin,
 } from "../../storage/tournament.ts";
 import { Colors } from "../../styles/Colors.ts";
-import { getServerURL, getToken } from "../../storage/login.ts";
+import Button from "../../components/Button";
+import { getServerURL } from "../../storage/login.ts";
 import { messageWS, tournamentDTO } from "../../storage/dto.ts";
 import { setNewestMessage } from "../../storage/messages.ts";
+import { EventRegister } from "react-native-event-listeners";
+import { useTranslation } from "react-i18next";
+import { retrivePairNumber } from "../../api/retrivePairNumber.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Summary>;
 
 export const SummaryScreen = ({ navigation, route }: Props) => {
+  const { t } = useTranslation();
   const [pairNumber, setPairNumber] = React.useState<number>(0);
   const [message, setMessage] = React.useState<string>("");
   const [webSocket, setWebSocket] = React.useState<WebSocket | null>(null);
-  const [torurnament,setTournament] = React.useState<tournamentDTO>({ ID: 0, code_id: 0, creator_id: 0, name: "" });
+  const [torurnament, setTournament] = React.useState<tournamentDTO>({
+    ID: 0,
+    code_id: 0,
+    creator_id: 0,
+    name: "",
+  });
+  EventRegister.addEventListener("pairNumberRetrive", pairNumber => {
+    setPairNumber(pairNumber);
+  });
+
   useEffect(() => {
     const initializeWebSocket = async () => {
       try {
         // Retrieve the URL from AsyncStorage
         const url = await getServerURL();
-        const token = await getToken();
+        // const token = await getToken();
         const code = await getCodeJoin();
         const pairNumber = await getPairNumber();
 
         if (url) {
           // Initialize WebSocket with the retrieved URL
           const ws = new WebSocket(
-            url + "api/ws/" + code + "/" + pairNumber,
+            url + "api/view/ws/" + code + "/" + pairNumber,
             null,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            },
+            // {
+            //   headers: { Authorization: `Bearer ${token}` },
+            // },
           );
 
           // Set up WebSocket event listeners
@@ -50,7 +65,11 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
             if (data.type === "vibrate") {
               Vibration.vibrate();
             }
-            console.log("ws", data.message, data.message.length !== 0);
+            if (data.type === "settings") {
+              EventRegister.emit("settings", data);
+            }
+            // console.log("ws", data.message, data.message.length !== 0);
+            console.log(data);
             if (data.message.length !== 0) {
               setMessage(data.message);
             }
@@ -92,39 +111,49 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
   }, []);
   useEffect(() => {
     getPairNumber().then(pn => {
-      if (pn != null) {
-        setPairNumber(pn);
+      if (pn == null) {
+        return;
       }
+      if (pn == 0) {
+        retrivePairNumber();
+      }
+      setPairNumber(pn);
     });
   }, []);
   return (
     <View>
-      <View>
+      <View style={{ alignItems: "center" }}>
         <Text style={style.text}>{torurnament.name}</Text>
         <Text style={style.text}>Pair number: {pairNumber}</Text>
-        <View style={style.messageBox}>
-          <Text style={style.text}>{message}</Text>
-        </View>
+        {/*<View style={style.messageBox}>*/}
+        {/*  <Text style={style.text}>{message}</Text>*/}
+        {/*</View>*/}
+        {/*<Button*/}
+        {/*  title={t("infoReciveer")}*/}
+        {/*  onPress={() => {*/}
+        {/*    navigation.navigate(screen.InfoReceiver);*/}
+        {/*  }}*/}
+        {/*/>*/}
         <Button
-          title={"info reciveer"}
+          title={t("AddPlaydBoard")}
           onPress={() => {
-            navigation.navigate(screen.InfoReceiver);
+            navigation.navigate("InputReceiveData");
           }}
         />
         <Button
-          title={"movement"}
+          title={t("movement")}
           onPress={() => {
             navigation.navigate(screen.Movement);
           }}
         />
         <Button
-          title={"input data"}
+          title={t("playersNames")}
           onPress={() => {
             navigation.navigate(screen.InputData);
           }}
         />
         <Button
-          title={"exit turnament"}
+          title={t("exitTournament")}
           onPress={() => {
             saveCodeJoin({ code: "" });
             // navigation.navigate(screen.Home);
@@ -133,6 +162,7 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
           }}
         />
       </View>
+      {/*<Button title={t("submit")} onPress={()=>{}}/>*/}
     </View>
   );
 };

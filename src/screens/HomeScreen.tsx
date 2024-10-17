@@ -6,14 +6,16 @@ import { screen } from "../enum/screen.ts";
 import Text from "../components/Text";
 import Button from "../components/Button";
 import { Colors } from "../styles/Colors.ts";
-import { getMyObjects } from "../api/getMe.ts";
 import { getCodeHistoryWithDates } from "../storage/history.ts";
 import { codeWithDate } from "../storage/dto.ts";
 import { saveCodeJoin } from "../storage/tournament.ts";
+import { getMyData } from "../storage/mydata.ts";
+import { useTranslation } from "react-i18next";
 
-type Props = NativeStackScreenProps<RootStackParamList, screen.Home>;
+type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export const HomeScreen = ({ navigation }: Props) => {
+  const { t } = useTranslation();
   const [text, setText] = React.useState<string>("");
   const [codeHistory, setCodeHistory] = React.useState<codeWithDate[]>([]);
   useEffect(() => {
@@ -23,7 +25,7 @@ export const HomeScreen = ({ navigation }: Props) => {
     });
   }, []);
   useEffect(() => {
-    getMyObjects().then(jsonValue => {
+    getMyData().then(jsonValue => {
       if (jsonValue === undefined) {
         setText("error");
         return;
@@ -71,10 +73,9 @@ export const HomeScreen = ({ navigation }: Props) => {
                 <View
                   style={{
                     flexDirection: "row",
-                    justifyContent: "space-evenly",
+                    justifyContent: "space-between",
                   }}>
                   <View>
-                    <Text>{code.code}</Text>
                     <Text>
                       {code.date.getFullYear() +
                         "." +
@@ -86,13 +87,17 @@ export const HomeScreen = ({ navigation }: Props) => {
                         ":" +
                         code.date.getMinutes()}
                     </Text>
+                    <Text>
+                      {t("code")}
+                      {code.code}
+                    </Text>
                   </View>
                   <Button
                     style={{ width: 100 }}
-                    title={"rejoin"}
+                    title={t("rejoin")}
                     onPress={() => {
                       saveCodeJoin({ code: code.code });
-                      navigation.navigate(screen.InputPlayer);
+                      navigation.navigate("InputPlayer");
                     }}
                   />
                 </View>
@@ -106,9 +111,9 @@ export const HomeScreen = ({ navigation }: Props) => {
           justifyContent: "center",
         }}>
         <Text>{text}</Text>
-        <Text>home</Text>
+        {/*<Text>home</Text>*/}
         <Button
-          title={"join by code"}
+          title={t("joinBycode")}
           onPress={() => navigation.push(screen.CodeJoin)}
         />
       </View>
@@ -121,6 +126,7 @@ const style = StyleSheet.create({
     margin: 5,
     padding: 5,
     borderRadius: 10,
-    borderWidth: 1,
+    // borderWidth: 1,
+    backgroundColor: Colors.card,
   },
 });

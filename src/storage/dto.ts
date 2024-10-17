@@ -45,6 +45,14 @@ export interface sendPlayerNameDTO {
   number: string;
   name: string;
 }
+export interface sendMyPlayerNameDTO {
+  name: string;
+  surname: string;
+  pairNumber: number;
+  pid: string;
+  isN: boolean;
+  isW: boolean;
+}
 export interface codeWithDate {
   code: string;
   date: Date;
@@ -76,4 +84,33 @@ export interface movementDTO {
   customSegment: number;
   customNsPair: number;
   customEWPair: number;
+}
+export interface settings {
+  chooseSector: boolean;
+  pairJoin: boolean;
+  singeJoin: boolean;
+  tableJoin: boolean;
+  defaultSector: number;
+  helloMessage: string;
+}
+export interface PairStat {
+  section: number;
+  pair: number;
+  rounds: number;
+  boards: number;
+}
+export interface reciveDataDto {
+  section: number;
+  table: number;
+  round: number;
+  board: number;
+  pairNS: number;
+  pairEW: number;
+  declarer: number;
+  ns: string;
+  contract: string;
+  result: string;
+  leadCard: string;
+  remarks: string;
+  erased: boolean;
 }

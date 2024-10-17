@@ -1,4 +1,4 @@
-import { TouchableHighlight } from "react-native";
+import { StyleSheet, TouchableHighlight } from "react-native";
 import { Colors } from "../../styles/Colors.ts";
 import Text from "../Text";
 import { StyleProp } from "react-native/Libraries/StyleSheet/StyleSheet";
@@ -14,11 +14,11 @@ export const Button = ({
   children?: any;
   onPress?: () => void;
   title?: string;
-  style?: any;
+  style?: StyleProp<ViewStyle>;
 }) => {
   if (title) {
     return (
-      <TouchableHighlight onPress={onPress} style={[styles, style]}>
+      <TouchableHighlight onPress={onPress} style={[styles.button, style]}>
         {/*<View style={style}>*/}
         <Text>{title}</Text>
         {/*</View>*/}
@@ -26,18 +26,24 @@ export const Button = ({
     );
   }
   return (
-    <TouchableHighlight onPress={onPress} style={[styles, style]}>
+    <TouchableHighlight onPress={onPress} style={[styles.button, style]}>
       {children}
     </TouchableHighlight>
   );
 };
 
-const styles: StyleProp<ViewStyle> = {
-  backgroundColor: Colors.primary,
-  padding: 5,
-  borderRadius: 5,
-  margin: 10,
-  width: 200,
-  justifyContent: "center",
-  alignItems: "center",
-};
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    padding: 5,
+    borderRadius: 5,
+    margin: 10,
+    width: 200,
+    borderBottomWidth:5,
+    borderRightWidth:5,
+    borderCurve: "continuous",
+    borderColor: Colors.shadow,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

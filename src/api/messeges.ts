@@ -10,12 +10,12 @@ export const messager = async (
   // if (ws === null || ws.readyState === WebSocket.CLOSED) {
   ws = new WebSocket(
     (await getServerURL()) +
-      "api/ws/" +
+      "api/view/ws/" +
       ((await getCodeJoin()) + "/" + (await getPairNumber())),
     null,
-    {
-      headers: { Authorization: `Bearer ${await getToken()}` },
-    },
+    // {
+    //   headers: { Authorization: `Bearer ${await getToken()}` },
+    // },
   );
   // }
   console.log(ws.readyState);

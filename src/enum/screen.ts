@@ -1,4 +1,7 @@
-export enum screen {
+/**
+ * @deprecated
+ */
+export enum screen  {
   Home = "Home",
   Login = "Login",
   Register = "Register",
@@ -11,4 +14,6 @@ export enum screen {
   InputData = "InputData",
   Loading = "Loading",
   Tournament = "Tournament",
+  UserSettings="UserSettings",
 }
+

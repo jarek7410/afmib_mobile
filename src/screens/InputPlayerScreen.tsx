@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./rootStats.ts";
 import { screen } from "../enum/screen.ts";
@@ -11,54 +11,82 @@ import {
   saveTableJoin,
   saveTournament,
 } from "../storage/tournament.ts";
+import Button from "../components/Button";
 import { joinTournament } from "../api/joinTournament.ts";
 import { getPair } from "../api/getPair.ts";
+import { settings } from "../storage/dto.ts";
+import { getSettings } from "../storage/settings.ts";
+import { useTranslation } from "react-i18next";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.InputPlayer>;
 
-export const InputPlayerScreen = ({ navigation,route }: Props) => {
+export const InputPlayerScreen = ({ navigation, route }: Props) => {
+  const { t } = useTranslation();
   const [section, setSection] = React.useState(1);
   const [table, setTable] = React.useState(1);
   const [round, setRound] = React.useState(1);
   const [isNS, setIsNS] = React.useState(true);
+  const [settings, setSettings] = useState<settings>({
+    chooseSector: false,
+    defaultSector: 1,
+    helloMessage: "hello",
+    pairJoin: false,
+    singeJoin: false,
+    tableJoin: false,
+  });
+  useEffect(() => {
+    getSettings().then(sett => {
+      if (sett == null) {
+        return;
+      }
+      setSettings(sett);
+    });
+  }, []);
   return (
-    <View style={style.base}>
+    <SafeAreaView
+      style={[style.base, { justifyContent: "center", alignItems: "center" }]}>
       <View style={[style.center]}>
         <View style={style.horizontal}>
           <View style={{ justifyContent: "space-around" }}>
-            <Text style={style.text}>section:</Text>
+            {settings.chooseSector && <Text style={style.text}>section:</Text>}
             <Text style={style.text}>table:</Text>
             <Text style={style.text}>round:</Text>
           </View>
           <View>
-            <InputNumber onChang={setSection} />
+            {settings.chooseSector && <InputNumber onChang={setSection} />}
             <InputNumber onChang={setTable} />
             <InputNumber onChang={setRound} />
           </View>
         </View>
         <Text>NS/EW:</Text>
         <View style={style.horizontal}>
-          <RadionButton onSelect={() => setIsNS(true)} state={isNS}>
-            <Text>NS</Text>
-          </RadionButton>
-          <RadionButton onSelect={() => setIsNS(false)} state={!isNS}>
-            <Text>EW</Text>
-          </RadionButton>
+          {isNS && (
+            <RadionButton onSelect={() => setIsNS(!isNS)} state={isNS}>
+              <Text>NS</Text>
+            </RadionButton>
+          )}
+          {!isNS && (
+            <RadionButton onSelect={() => setIsNS(!isNS)} state={!isNS}>
+              <Text>EW</Text>
+            </RadionButton>
+          )}
         </View>
       </View>
       <Button
-        title={"Select"}
+        title={t("confirm")}
         onPress={() => {
+          //TODO: to much to do in ui
           joinTournament().then(tourn => {
             saveTournament(tourn);
-          });
-          saveTableJoin({ section, table, round, is_ns: isNS }).then(() => {
-            getPair().then(pair => {
-              console.log("pair: ", pair);
-              savePairNumber(pair);
-              // navigation.navigate(screen.Summary);
-              route.params.join();
-              navigation.reset({ routes: [{ name: screen.Summary }] });
+            saveTableJoin({ section, table, round, is_ns: isNS }).then(() => {
+              getPair().then(pair => {
+                // console.log("pair: ", pair);
+
+                savePairNumber(pair);
+                // navigation.navigate(screen.Summary);
+                route.params.join();
+                navigation.reset({ routes: [{ name: screen.Summary }] });
+              });
             });
           });
         }}
@@ -66,8 +94,8 @@ export const InputPlayerScreen = ({ navigation,route }: Props) => {
       <Text>Section: {section}</Text>
       <Text>Table: {table}</Text>
       <Text>Round: {round}</Text>
-      <Text>isNS: {isNS}</Text>
-    </View>
+      <Text>isNS: {isNS ? "tak" : "nie"}</Text>
+    </SafeAreaView>
   );
 };
 

@@ -80,7 +80,7 @@ export const style = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.primary,
     margin: 5,
   },
 });

@@ -40,7 +40,7 @@ const style = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   deselected: {
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.background,
   },
   radion: {
     width: 50,
