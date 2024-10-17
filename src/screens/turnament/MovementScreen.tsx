@@ -6,23 +6,27 @@ import { screen } from "../../enum/screen.ts";
 import { movementDTO } from "../../storage/dto.ts";
 import { Colors } from "../../styles/Colors.ts";
 import { getMovementData, saveMovementData } from "../../storage/tournament.ts";
+import { getMovement } from "../../api/getMovement.ts";
 
 type Props = NativeStackScreenProps<RootStackParamList, screen.Movement>;
 
 export const MovementScreen = ({}: Props) => {
   const [movement, setMovement] = React.useState<movementDTO[]>([]);
   useEffect(() => {
+    getMovement().then(mov => {
+      saveMovementData(mov);
+
+      setMovement(mov);
+    });
+  }, []);
+  useEffect(() => {
     getMovementData().then(mov => {
-      saveMovementData(mov).then(() => {
-        getMovementData().then(mov => {
-          setMovement(mov);
-        });
-      });
+      setMovement(mov);
     });
   }, []);
   return (
     <SafeAreaView style={style.container}>
-      <ScrollView>
+      <ScrollView style={{ marginTop: 20, marginHorizontal: 10 }}>
         {movement &&
           movement
             .sort((a, b) => {
@@ -77,13 +81,14 @@ export const MovementScreen = ({}: Props) => {
 const style = StyleSheet.create({
   text: {
     fontSize: 17,
+    fontWeight: "500",
     color: Colors.text,
   },
   card: {
     margin: 5,
-    padding: 3,
+    padding: 5,
     borderRadius: 10,
-    borderWidth: 1,
+    // borderWidth: 1,
     backgroundColor: Colors.card,
   },
   container: {
@@ -92,12 +97,13 @@ const style = StyleSheet.create({
   },
   horizontal: {
     flexDirection: "row",
+    justifyContent: "space-evenly",
   },
   cardText: {
     padding: 10,
-    margin: 3,
+    margin: 5,
     borderRadius: 10,
-    borderWidth: 1,
+    // borderWidth: 1,
     backgroundColor: Colors.cardPart,
   },
 });

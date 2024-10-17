@@ -126,6 +126,7 @@ const style = StyleSheet.create({
     margin: 5,
     padding: 5,
     borderRadius: 10,
-    borderWidth: 1,
+    // borderWidth: 1,
+    backgroundColor: Colors.card,
   },
 });

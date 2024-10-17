@@ -23,6 +23,7 @@ export const getCodeJoin = async (): Promise<string | null> => {
   const codeJoin = await AsyncStorage.getItem("@codeJoin");
   return codeJoin != null ? JSON.parse(codeJoin).code : null;
 };
+
 export const getCodeJoinObject = async (): Promise<codejoinDTO | null> => {
   const codeJoin = await AsyncStorage.getItem("@codeJoin");
   return codeJoin != null ? JSON.parse(codeJoin) : null;
@@ -49,6 +50,7 @@ export const saveTableJoin = async (tableJoin: tableJoinDTO) => {
     JSON.stringify(tableJoin),
   );
 };
+
 export const getTableJoin = async (): Promise<tableJoinDTO | null> => {
   const tableJoin = await AsyncStorage.getItem(
     (await getCodeJoin()) + "@tableJoin",

@@ -1,26 +1,21 @@
 import { getServerURL, getToken } from "../storage/login.ts";
 import { getCodeJoin, getTableJoin } from "../storage/tournament.ts";
-import { sendPlayerNameDTO, sendPlayerNamesDTO } from "../storage/dto.ts";
+import { sendMyPlayerNameDTO, sendPlayerNameDTO, sendPlayerNamesDTO } from "../storage/dto.ts";
 
-export const sendPlayerNames = async (playerNames: sendPlayerNameDTO[]) => {
+export const sendPlayerNames = async (playerNames: sendMyPlayerNameDTO[]) => {
   const tableJoin = await getTableJoin();
   if (tableJoin == null) {
     throw new Error("getTableJoin failed: data grab");
   }
-  const reqData: sendPlayerNamesDTO = {
-    playerNumbers: playerNames,
-    round: tableJoin.round,
-    section: tableJoin.section,
-    table: tableJoin.table,
-  };
   await fetch(
-    (await getServerURL()) + "api/view/playernames/" + (await getCodeJoin()),
+    (await getServerURL()) + "api/view/tournament/" + (await getCodeJoin())+"/myplayers",
     {
       headers: {
         Authorization: "Bearer " + (await getToken()),
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(reqData),
+      method: "POST",
+      body: JSON.stringify(playerNames),
     },
   ).then(response => {
     if (response.ok) {

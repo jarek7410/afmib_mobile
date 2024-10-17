@@ -11,7 +11,7 @@ import {
 } from "../../storage/tournament.ts";
 import { Colors } from "../../styles/Colors.ts";
 import Button from "../../components/Button";
-import { getServerURL, getToken } from "../../storage/login.ts";
+import { getServerURL } from "../../storage/login.ts";
 import { messageWS, tournamentDTO } from "../../storage/dto.ts";
 import { setNewestMessage } from "../../storage/messages.ts";
 import { EventRegister } from "react-native-event-listeners";
@@ -31,9 +31,9 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
     creator_id: 0,
     name: "",
   });
-  EventRegister.addEventListener("pairNumberRetrive",(pairNumber)=>{
-    setPairNumber(pairNumber)
-  })
+  EventRegister.addEventListener("pairNumberRetrive", pairNumber => {
+    setPairNumber(pairNumber);
+  });
 
   useEffect(() => {
     const initializeWebSocket = async () => {
@@ -65,7 +65,7 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
             if (data.type === "vibrate") {
               Vibration.vibrate();
             }
-            if(data.type === "settings"){
+            if (data.type === "settings") {
               EventRegister.emit("settings", data);
             }
             // console.log("ws", data.message, data.message.length !== 0);
@@ -112,26 +112,32 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
   useEffect(() => {
     getPairNumber().then(pn => {
       if (pn == null) {
-        return
+        return;
       }
-      if(pn==0){
-        retrivePairNumber()
+      if (pn == 0) {
+        retrivePairNumber();
       }
       setPairNumber(pn);
     });
   }, []);
   return (
     <View>
-      <View style={{alignItems:"center"}}>
+      <View style={{ alignItems: "center" }}>
         <Text style={style.text}>{torurnament.name}</Text>
         <Text style={style.text}>Pair number: {pairNumber}</Text>
-        <View style={style.messageBox}>
-          <Text style={style.text}>{message}</Text>
-        </View>
+        {/*<View style={style.messageBox}>*/}
+        {/*  <Text style={style.text}>{message}</Text>*/}
+        {/*</View>*/}
+        {/*<Button*/}
+        {/*  title={t("infoReciveer")}*/}
+        {/*  onPress={() => {*/}
+        {/*    navigation.navigate(screen.InfoReceiver);*/}
+        {/*  }}*/}
+        {/*/>*/}
         <Button
-          title={t("infoReciveer")}
+          title={t("AddPlaydBoard")}
           onPress={() => {
-            navigation.navigate(screen.InfoReceiver);
+            navigation.navigate("InputReceiveData");
           }}
         />
         <Button
@@ -156,6 +162,7 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
           }}
         />
       </View>
+      {/*<Button title={t("submit")} onPress={()=>{}}/>*/}
     </View>
   );
 };

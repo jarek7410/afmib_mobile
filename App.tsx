@@ -7,7 +7,8 @@ import { HomeScreen } from "./src/screens/HomeScreen.tsx";
 import { screen } from "./src/enum/screen.ts";
 import { createStackNavigator } from "@react-navigation/stack";
 import { RootStackParamList } from "./src/screens/rootStats.ts";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
+import { Colors } from "./src/styles/Colors.ts";
 import { CodeJoinScreen } from "./src/screens/CodeJoinScreen.tsx";
 import { InputPlayerScreen } from "./src/screens/InputPlayerScreen.tsx";
 import { SummaryScreen } from "./src/screens/turnament/SummaryScreen.tsx";
@@ -23,6 +24,7 @@ import { UserSettingsScreen } from "./src/screens/settings/userSettings.tsx";
 import { LoginScreen, RegisterScreen } from "./src/screens/befor_login";
 import i18next from "i18next";
 import { getLangue } from "./src/storage/langue.ts";
+import { InputReceiveData } from "./src/screens/turnament/InputReceiveData.tsx";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -32,9 +34,9 @@ function App() {
   const [isJoin, setIsJoin] = useState<boolean>(false);
 
   useEffect(() => {
-    (async()=> {
+    (async () => {
       i18next.changeLanguage(await getLangue());
-    })()
+    })();
   }, []);
   const joinToTournamtnt = () => {
     console.log("join to tournament ");
@@ -51,7 +53,17 @@ function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={screen.Home}>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: Colors.car,
+            },
+            headerTintColor: "#000",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+          initialRouteName={screen.Home}>
           {!isJoin && (
             <Stack.Group>
               <Stack.Screen
@@ -91,6 +103,10 @@ function App() {
               <Stack.Screen
                 name={screen.InputData}
                 component={InputDataScreen}
+              />
+              <Stack.Screen
+                name={"InputReceiveData"}
+                component={InputReceiveData}
               />
             </Stack.Group>
           )}

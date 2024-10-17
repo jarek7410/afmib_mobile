@@ -1,3 +1,5 @@
+import { movementDTO } from "../storage/dto.ts";
+
 export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
@@ -12,4 +14,6 @@ export type RootStackParamList = {
   Loading: undefined;
   Tournament: undefined;
   UserSettings: undefined;
+  PlayerNames: { movment: movementDTO };
+  InputReceiveData: undefined;
 };
