@@ -43,9 +43,10 @@ const style = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   radion: {
-    width: 50,
-    height: 50,
-    margin: 10,
+    width: 40,
+    height: 40,
+    margin: 5,
+    borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
   },
