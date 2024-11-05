@@ -23,5 +23,8 @@
   "surname": "nazwisko",
   "name": "Imie",
   "firstPlayer": "pierwszy zawodnik:",
-  "secendPlayer": "drugi zawodnik"
+  "secendPlayer": "drugi zawodnik",
+  "board": "rozdanie",
+  "contract": "kontrakt",
+  "lead": "wist"
 }

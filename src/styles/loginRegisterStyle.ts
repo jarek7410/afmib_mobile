@@ -26,4 +26,12 @@ export const style = StyleSheet.create({
     fontSize: 20,
     color: Colors.text,
   },
+  rowCare: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    backgroundColor: Colors.card,
+    justifyContent: "center",
+    margin: 5,
+  },
+
 });

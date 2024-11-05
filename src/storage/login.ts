@@ -38,7 +38,7 @@ export const getServerURL = async (): Promise<string> => {
   const url = await AsyncStorage.getItem("@serverURL");
   if (url === null) {
     return "https://stasikowka.click/";
-    // return "http://192.168.0.220:2137/";
+    // return "http://192.168.1.142:2137/";
   }
   return url;
 };

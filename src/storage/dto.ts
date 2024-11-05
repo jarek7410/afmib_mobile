@@ -69,9 +69,9 @@ export interface messageWS {
   type: string;
 }
 export interface movementDTO {
-  CreatedAt: string;
-  UpdatedAt: string;
-  DeletedAt: string;
+  CreatedAt: Date;
+  UpdatedAt: Date;
+  DeletedAt: Date;
   section: number;
   table: number;
   round: number;
@@ -94,10 +94,11 @@ export interface settings {
   helloMessage: string;
 }
 export interface PairStat {
-  section: number;
-  pair: number;
-  rounds: number;
-  boards: number;
+  Pair: number;
+  Round: number;
+  BoardsNotPlayed: string[];
+  BoardsPlayed: string[];
+  BoardsAll: string[];
 }
 export interface reciveDataDto {
   section: number;
