@@ -69,13 +69,31 @@ export const InputReceiveData = ({ navigation }: Props) => {
     }
   }, [movement, pairStat]);
   const sumeupBoard = () => {
-    setContract(contractnumber + " " + contractSuit + " " + contractDouble);
+    const c = contractnumber + " " + contractSuit + " " + contractDouble;
+    let ro = "";
     if (resultOutcome !== "=") {
-      setResult(resultOutcome + resultNumber);
+      ro = resultOutcome + resultNumber;
     } else {
-      setResult(resultOutcome);
+      ro = resultOutcome;
     }
-    setLeadCard(leadCardSuit + leadCard);
+    const ld = leadCardSuit + leadCard;
+    sendNewReciveData({
+      board: board,
+      contract: c,
+      declarer:
+        nsew === "N" || nsew === "S" ? currentMOV.nsPair : currentMOV.ewPair,
+      erased: false,
+      leadCard: ld,
+      ns: nsew,
+      pairEW: currentMOV.ewPair,
+      pairNS: currentMOV.nsPair,
+      remarks: "",
+      result: ro,
+      round: currentMOV.round,
+      section: currentMOV.section,
+      table: currentMOV.table,
+    });
+    navigation.goBack();
   };
   // const setBoardText = (text: string) => {
   //   const n = parseInt(text);
@@ -383,25 +401,6 @@ export const InputReceiveData = ({ navigation }: Props) => {
                   title={t("confirm")}
                   onPress={() => {
                     sumeupBoard();
-                    sendNewReciveData({
-                      board: board,
-                      contract: contract,
-                      declarer:
-                        nsew === "N" || nsew === "S"
-                          ? currentMOV.nsPair
-                          : currentMOV.ewPair,
-                      erased: false,
-                      leadCard: leadCard,
-                      ns: nsew,
-                      pairEW: currentMOV.ewPair,
-                      pairNS: currentMOV.nsPair,
-                      remarks: "",
-                      result: result,
-                      round: currentMOV.round,
-                      section: currentMOV.section,
-                      table: currentMOV.table,
-                    });
-                    navigation.goBack();
                   }}
                   style={{ height: 64, width: 96 }}
                 />

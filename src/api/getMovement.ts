@@ -1,5 +1,5 @@
 import { getCodeJoin, getPairNumber } from "../storage/tournament.ts";
-import { getServerURL, getToken } from "../storage/login.ts";
+import { getServerURL } from "../storage/login.ts";
 import { movementDTO } from "../storage/dto.ts";
 
 export const getMovement = async (): Promise<movementDTO[]> => {
