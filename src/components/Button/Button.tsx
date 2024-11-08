@@ -10,15 +10,17 @@ export const Button = ({
   onPress,
   title,
   style,
+  disabled,
 }: {
   children?: any;
   onPress?: () => void;
   title?: string;
   style?: StyleProp<ViewStyle>;
+  disabled?: boolean;
 }) => {
   if (title) {
     return (
-      <TouchableHighlight onPress={onPress} style={[styles.button, style]}>
+      <TouchableHighlight onPress={onPress} style={[styles.button, style]} disabled={disabled}>
         {/*<View style={style}>*/}
         <Text>{title}</Text>
         {/*</View>*/}
@@ -26,7 +28,7 @@ export const Button = ({
     );
   }
   return (
-    <TouchableHighlight onPress={onPress} style={[styles.button, style]}>
+    <TouchableHighlight onPress={onPress} style={[styles.button, style]} disabled={disabled}>
       {children}
     </TouchableHighlight>
   );

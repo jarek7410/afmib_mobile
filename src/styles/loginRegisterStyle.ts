@@ -33,5 +33,11 @@ export const style = StyleSheet.create({
     justifyContent: "center",
     margin: 5,
   },
+  horCare: {
+    // flexWrap: "wrap",
+    backgroundColor: Colors.card,
+    justifyContent: "center",
+    margin: 5,
+  },
 
 });
