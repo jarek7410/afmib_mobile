@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../rootStats.ts";
-import { SafeAreaView, ScrollView, TextInput, View } from "react-native";
+import { SafeAreaView, ScrollView, TextInput, Vibration, View } from "react-native";
 import Button from "../../components/Button";
 import React, { useEffect, useState } from "react";
 import { movementDTO, PairStat } from "../../storage/dto.ts";
@@ -13,6 +13,7 @@ import { style } from "../../styles/loginRegisterStyle.ts";
 import { Colors } from "../../styles/Colors.ts";
 import { sendNewReciveData } from "../../api/sendNewReciveData.ts";
 import { useTranslation } from "react-i18next";
+import { handleConfirmationFlow } from "../../handler/ModalInputReciverhandler.tsx";
 
 type Props = NativeStackScreenProps<RootStackParamList, "InputReceiveData">;
 export const InputReceiveData = ({ navigation }: Props) => {
@@ -69,13 +70,39 @@ export const InputReceiveData = ({ navigation }: Props) => {
     }
   }, [movement, pairStat]);
   const sumeupBoard = () => {
-    setContract(contractnumber + " " + contractSuit + " " + contractDouble);
+    const c = contractnumber + " " + contractSuit + " " + contractDouble;
+    let ro = "";
     if (resultOutcome !== "=") {
-      setResult(resultOutcome + resultNumber);
+      ro = resultOutcome + resultNumber;
     } else {
-      setResult(resultOutcome);
+      ro = resultOutcome;
     }
-    setLeadCard(leadCardSuit + leadCard);
+    const ld = leadCardSuit + leadCardNumber;
+    const NewRecData = {
+      board: board,
+      contract: c,
+      declarer:
+        nsew === "N" || nsew === "S" ? currentMOV.nsPair : currentMOV.ewPair,
+      erased: false,
+      leadCard: ld,
+      ns: nsew,
+      pairEW: currentMOV.ewPair,
+      pairNS: currentMOV.nsPair,
+      remarks: "",
+      result: ro,
+      round: currentMOV.round,
+      section: currentMOV.section,
+      table: currentMOV.table,
+    };
+    Vibration.vibrate();
+    handleConfirmationFlow(NewRecData).then(r => {
+      if (!r) {
+        return;
+      }
+      console.log("sendNewReciveData");
+      sendNewReciveData(NewRecData);
+      navigation.goBack();
+    });
   };
   // const setBoardText = (text: string) => {
   //   const n = parseInt(text);
@@ -84,9 +111,18 @@ export const InputReceiveData = ({ navigation }: Props) => {
   //   }
   // };
   const setResultNumberText = (text: string) => {
-    const n = parseInt(text);
+    const n = parseInt(text, 10);
+    if(!n){
+      setResultNumber(0);
+      return;
+    }
+    if (n > 13) {
+      setResultNumber(n % 13);
+      return;
+    }
     if (n) {
       setResultNumber(n);
+      return;
     }
   };
   // const setLeadCardNumberText = (text: string) => {
@@ -94,6 +130,13 @@ export const InputReceiveData = ({ navigation }: Props) => {
   //   if (n) {
   //     setLeadCardNumber(n);
   //   }
+  function resultCorrect() {
+    if (resultOutcome !== "=" && resultNumber === 0) {
+      return false;
+    }
+    return true;
+  }
+
   // };
   if (!pairStat.BoardsNotPlayed) {
     return (
@@ -347,8 +390,8 @@ export const InputReceiveData = ({ navigation }: Props) => {
               <Text>9</Text>
             </RadionButton>
             <RadionButton
-              onSelect={() => setLeadCardNumber("T")}
-              state={leadCardNumber === "T"}>
+              onSelect={() => setLeadCardNumber("10")}
+              state={leadCardNumber === "10"}>
               <Text>T</Text>
             </RadionButton>
             <RadionButton
@@ -377,31 +420,13 @@ export const InputReceiveData = ({ navigation }: Props) => {
             leadCardSuit !== "" &&
             leadCardNumber !== "" &&
             nsew !== "" &&
+            resultCorrect() &&
             pairStat.BoardsNotPlayed.indexOf(board.toString()) !== -1 && (
               <View style={style.rowCare}>
                 <Button
                   title={t("confirm")}
                   onPress={() => {
                     sumeupBoard();
-                    sendNewReciveData({
-                      board: board,
-                      contract: contract,
-                      declarer:
-                        nsew === "N" || nsew === "S"
-                          ? currentMOV.nsPair
-                          : currentMOV.ewPair,
-                      erased: false,
-                      leadCard: leadCard,
-                      ns: nsew,
-                      pairEW: currentMOV.ewPair,
-                      pairNS: currentMOV.nsPair,
-                      remarks: "",
-                      result: result,
-                      round: currentMOV.round,
-                      section: currentMOV.section,
-                      table: currentMOV.table,
-                    });
-                    navigation.goBack();
                   }}
                   style={{ height: 64, width: 96 }}
                 />

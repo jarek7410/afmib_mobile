@@ -69,7 +69,7 @@ export const MovementScreen = ({}: Props) => {
                       </Text>
                     </View>
                   </View>
-                  <Text style={style.text}>{mov.UpdatedAt.toTimeString()}</Text>
+                  <Text style={style.text}>{mov.UpdatedAt}</Text>
                 </View>
               );
             })}
