@@ -3,7 +3,6 @@ import { RootStackParamList } from "../rootStats.ts";
 import {
   SafeAreaView,
   ScrollView,
-  TextInput,
   Vibration,
   View,
 } from "react-native";
@@ -111,8 +110,29 @@ export const InputReceiveData = ({ navigation }: Props) => {
       navigation.goBack();
     });
   };
-  function resultCorrect() {
-    if (resultOutcome !== "=" && resultNumber === 0) {
+  function dataCorrect() {
+    if (contractnumber === -1 || contractnumber === 0) {
+      return false;
+    }
+    if (pairStat.BoardsNotPlayed.indexOf(board.toString()) === -1) {
+      return;
+    }
+    if (resultOutcome !== "=" && (resultNumber === 0 || resultNumber === -1)) {
+      return false;
+    }
+    if (resultOutcome === "") {
+      return false;
+    }
+    if (contractSuit === "") {
+      return false;
+    }
+    if (leadCardSuit === "") {
+      return false;
+    }
+    if (leadCardNumber === "") {
+      return false;
+    }
+    if (nsew === "") {
       return false;
     }
     return true;
@@ -164,7 +184,7 @@ export const InputReceiveData = ({ navigation }: Props) => {
               {contractSuit}
               {contractDouble} {nsew} {leadCardSuit}
               {leadCardNumber} {resultOutcome}
-              {resultOutcome !== "="&& resultNumber!==-1 ? resultNumber : ""}
+              {resultOutcome !== "=" && resultNumber !== -1 ? resultNumber : ""}
             </Text>
           </View>
         </View>
@@ -186,7 +206,7 @@ export const InputReceiveData = ({ navigation }: Props) => {
             })}
           </View>
           <View style={style.rowCare}>
-            <Text>{t("contract")}:</Text>
+            <Text>{t("contract")}</Text>
           </View>
           <View
             style={[
@@ -327,60 +347,64 @@ export const InputReceiveData = ({ navigation }: Props) => {
           <View style={style.rowCare}>
             <Text>{t("lead")}</Text>
           </View>
-          <View style={style.rowCare}>
-            <View>
-              <RadionButton
-                style={{ backgroundColor: Colors.SpadeBackground }}
-                onSelect={() => setLeadCardSuit("S")}
-                state={leadCardSuit === "S"}>
-                <Icon
-                  name={"cards-spade"}
-                  color={
-                    leadCardSuit === "S" ? Colors.SiutSelect : Colors.Spade
-                  }
-                  size={24}
-                />
-              </RadionButton>
+          <View style={{ flexDirection: "row" }}>
+            <View style={style.rowCare}>
+              <View>
+                <RadionButton
+                  style={{ backgroundColor: Colors.SpadeBackground }}
+                  onSelect={() => setLeadCardSuit("S")}
+                  state={leadCardSuit === "S"}>
+                  <Icon
+                    name={"cards-spade"}
+                    color={
+                      leadCardSuit === "S" ? Colors.SiutSelect : Colors.Spade
+                    }
+                    size={24}
+                  />
+                </RadionButton>
 
-              <RadionButton
-                style={{ backgroundColor: Colors.HeartBackground }}
-                onSelect={() => setLeadCardSuit("H")}
-                state={leadCardSuit === "H"}>
-                <Icon
-                  name={"cards-heart"}
-                  color={
-                    leadCardSuit === "H" ? Colors.SiutSelect : Colors.Heart
-                  }
-                  size={24}
-                />
-              </RadionButton>
+                <RadionButton
+                  style={{ backgroundColor: Colors.HeartBackground }}
+                  onSelect={() => setLeadCardSuit("H")}
+                  state={leadCardSuit === "H"}>
+                  <Icon
+                    name={"cards-heart"}
+                    color={
+                      leadCardSuit === "H" ? Colors.SiutSelect : Colors.Heart
+                    }
+                    size={24}
+                  />
+                </RadionButton>
+              </View>
+              <View>
+                <RadionButton
+                  style={{ backgroundColor: Colors.DiamondBackground }}
+                  onSelect={() => setLeadCardSuit("D")}
+                  state={leadCardSuit === "D"}>
+                  <Icon
+                    name={"cards-diamond"}
+                    color={
+                      leadCardSuit === "D" ? Colors.SiutSelect : Colors.Diamond
+                    }
+                    size={24}
+                  />
+                </RadionButton>
+                <RadionButton
+                  style={{ backgroundColor: Colors.ClubBackground }}
+                  onSelect={() => setLeadCardSuit("C")}
+                  state={leadCardSuit === "C"}>
+                  <Icon
+                    name={"cards-club"}
+                    color={
+                      leadCardSuit === "C" ? Colors.SiutSelect : Colors.Club
+                    }
+                    size={24}
+                  />
+                </RadionButton>
+              </View>
             </View>
-            <View>
-              <RadionButton
-                style={{ backgroundColor: Colors.DiamondBackground }}
-                onSelect={() => setLeadCardSuit("D")}
-                state={leadCardSuit === "D"}>
-                <Icon
-                  name={"cards-diamond"}
-                  color={
-                    leadCardSuit === "D" ? Colors.SiutSelect : Colors.Diamond
-                  }
-                  size={24}
-                />
-              </RadionButton>
-              <RadionButton
-                style={{ backgroundColor: Colors.ClubBackground }}
-                onSelect={() => setLeadCardSuit("C")}
-                state={leadCardSuit === "C"}>
-                <Icon
-                  name={"cards-club"}
-                  color={leadCardSuit === "C" ? Colors.SiutSelect : Colors.Club}
-                  size={24}
-                />
-              </RadionButton>
-            </View>
-
-            <View>
+            <View style={[style.rowCare, { flex: 1, marginHorizontal: 0 }]}>
+              {/*<View>*/}
               <RadionButton
                 onSelect={() => setLeadCardNumber("J")}
                 state={leadCardNumber === "J"}>
@@ -391,8 +415,8 @@ export const InputReceiveData = ({ navigation }: Props) => {
                 state={leadCardNumber === "Q"}>
                 <Text>Q</Text>
               </RadionButton>
-            </View>
-            <View>
+              {/*</View>*/}
+              {/*<View>*/}
               <RadionButton
                 onSelect={() => setLeadCardNumber("K")}
                 state={leadCardNumber === "K"}>
@@ -403,14 +427,9 @@ export const InputReceiveData = ({ navigation }: Props) => {
                 state={leadCardNumber === "A"}>
                 <Text>A</Text>
               </RadionButton>
-            </View>
+              {/*</View>*/}
 
-            <View
-              style={{
-                flex: 2,
-                flexDirection: "row",
-                flexWrap: "wrap",
-              }}>
+              {/*<View>*/}
               <RadionButton
                 onSelect={() => setLeadCardNumber("10")}
                 state={leadCardNumber === "10"}>
@@ -426,6 +445,8 @@ export const InputReceiveData = ({ navigation }: Props) => {
                 state={leadCardNumber === "8"}>
                 <Text>8</Text>
               </RadionButton>
+              {/*</View>*/}
+              {/*<View>*/}
               <RadionButton
                 onSelect={() => setLeadCardNumber("7")}
                 state={leadCardNumber === "7"}>
@@ -441,6 +462,8 @@ export const InputReceiveData = ({ navigation }: Props) => {
                 state={leadCardNumber === "5"}>
                 <Text>5</Text>
               </RadionButton>
+              {/*</View>*/}
+              {/*<View>*/}
               <RadionButton
                 onSelect={() => setLeadCardNumber("4")}
                 state={leadCardNumber === "4"}>
@@ -456,6 +479,7 @@ export const InputReceiveData = ({ navigation }: Props) => {
                 state={leadCardNumber === "2"}>
                 <Text>2</Text>
               </RadionButton>
+              {/*</View>*/}
             </View>
           </View>
 
@@ -483,7 +507,7 @@ export const InputReceiveData = ({ navigation }: Props) => {
               </View>
             </View>
 
-            <View style={[style.rowCare, { flex: 1 }]}>
+            <View style={[style.rowCare, { flex: 1, marginHorizontal: 0 }]}>
               {resultOutcome === "+" && (
                 <>
                   <RadionButton
@@ -526,24 +550,17 @@ export const InputReceiveData = ({ navigation }: Props) => {
               )}
             </View>
           </View>
-          {contractnumber !== -1 &&
-            contractnumber !== 0 &&
-            contractSuit !== "" &&
-            leadCardSuit !== "" &&
-            leadCardNumber !== "" &&
-            nsew !== "" &&
-            resultCorrect() &&
-            pairStat.BoardsNotPlayed.indexOf(board.toString()) !== -1 && (
-              <View style={style.rowCare}>
-                <Button
-                  title={t("confirm")}
-                  onPress={() => {
-                    sumeupBoard();
-                  }}
-                  style={{ height: 64, width: 96 }}
-                />
-              </View>
-            )}
+          {dataCorrect() && (
+            <View style={style.rowCare}>
+              <Button
+                title={t("confirm")}
+                onPress={() => {
+                  sumeupBoard();
+                }}
+                style={{ height: 64, width: 96 }}
+              />
+            </View>
+          )}
           <View style={{ height: 300 }} />
         </ScrollView>
       </SafeAreaView>
