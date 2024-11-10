@@ -10,7 +10,7 @@ export const style = StyleSheet.create({
     // borderWidth: 1,
     borderRadius: 10,
     margin: 5,
-    backgroundColor:Colors.primary
+    backgroundColor: Colors.primary
   },
   centralizeContainer: {
     flex: 1,
@@ -32,6 +32,7 @@ export const style = StyleSheet.create({
     backgroundColor: Colors.card,
     justifyContent: "center",
     margin: 5,
+    borderRadius: 8,
   },
   horCare: {
     // flexWrap: "wrap",
@@ -39,5 +40,4 @@ export const style = StyleSheet.create({
     justifyContent: "center",
     margin: 5,
   },
-
 });

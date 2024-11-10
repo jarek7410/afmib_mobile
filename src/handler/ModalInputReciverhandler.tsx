@@ -33,10 +33,8 @@ const ConfirmationModal = ({ NewRecData }: ConfirmationModalProps) => {
         {
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "pink",
         },
       ]}>
-      <Text>Are you sure you want to confirm?</Text>
       <Text>
         Table:{NewRecData.table} Round:{NewRecData.round} Board:
         {NewRecData.board}
@@ -44,13 +42,18 @@ const ConfirmationModal = ({ NewRecData }: ConfirmationModalProps) => {
       <Text>
         NS: {NewRecData.pairNS} EW: {NewRecData.pairEW}
       </Text>
-      <Text>
-        declare: {NewRecData.ns} in pair {NewRecData.declarer}
-      </Text>
-      <Text>
-        Contract: {NewRecData.contract} Result: {NewRecData.result}
-      </Text>
-      <Text> Lead: {NewRecData.leadCard}</Text>
+      <Text style={{fontSize:20}}>Are you sure you want to confirm?</Text>
+      <View style={{justifyContent:"flex-start"}}>
+
+        <Text>
+          declare: {NewRecData.ns} in pair {NewRecData.declarer}
+        </Text>
+        <Text>
+          Contract: {NewRecData.contract}
+        </Text>
+        <Text>Lead: {NewRecData.leadCard}</Text>
+        <Text>Result: {NewRecData.result}</Text>
+      </View>
 
       {!dis && (
         <Button onPress={() => hide({ success: true })}>

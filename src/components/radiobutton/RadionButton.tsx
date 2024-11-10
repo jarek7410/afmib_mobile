@@ -7,11 +7,13 @@ export const RadionButton = ({
   onSelect,
   state,
   isSelected = false,
+  style
 }: {
   children: any;
   onSelect: (isSelected: boolean) => void;
   state?: boolean;
   isSelected?: boolean;
+  style?: any;
 }) => {
   const [isSelect, setIsSelect] = useState(isSelected);
   useEffect(() => {
@@ -27,20 +29,22 @@ export const RadionButton = ({
         onSelect(!isSelect);
       }}>
       {isSelect && (
-        <View style={[style.radion, style.selected]}>{children}</View>
+        <View style={[styles.radion, style, styles.selected]}>{children}</View>
       )}
       {!isSelect && (
-        <View style={[style.radion, style.deselected]}>{children}</View>
+        <View style={[styles.radion, styles.deselected, style]}>
+          {children}
+        </View>
       )}
     </Pressable>
   );
 };
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   selected: {
     backgroundColor: Colors.primary,
   },
   deselected: {
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.deselect,
   },
   radion: {
     width: 40,
