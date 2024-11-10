@@ -1,8 +1,8 @@
 export const Colors = {
-  background: "#d5d5d5",
-  deselect: "#b2b1b1",
-  card: "#ecebeb",
-  cardPart: "#ffffff",
+  background: "#000000",
+  deselect: "#5b5b5b",
+  card: "#232323",
+  cardPart: "#424242",
   text: "#000000",
   primary: "#44e36c",
   secondary: "#4cd137",
