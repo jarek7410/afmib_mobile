@@ -13,5 +13,14 @@
   "joinBycode": "join by code",
   "changeUserData": "change your data",
   "login": "Login",
-  "logout": "logout"
+  "logout": "logout",
+  "lead": "lead",
+  "outcome": "outcome",
+  "confirm": "confirm",
+  "movement": "movement",
+  "playersNames": "players names",
+  "exitTournament": "exit tournament",
+  "AddPlaydBoard": "add new played board",
+  "board": "board",
+  "contract": "contract"
 }

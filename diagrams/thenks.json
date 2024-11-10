@@ -1,0 +1,28 @@
+[
+  {
+    "keys": ["main author"],
+    "name": "Jarek Komsta",
+    "description": "Jarek Komsta is a software engineer and a co-founder of Thenks. He is responsible for the development of the platform and the mobile application.",
+    "image": "",
+    "links": {
+      "github": "https://github.com/jarek7410"
+    }
+  },
+  {
+    "keys": ["UI consultation"],
+    "name": "Katarzyna Kucharzyk"
+  },
+  {
+    "keys": ["UI consultation"],
+    "name": "Szymon Kubiczek"
+  },
+  {
+    "keys": ["UI consultation"],
+    "name": "Krystyna Gasińska"
+  },
+  {
+    "keys": ["for tests"],
+    "name": "just bridge agh"
+  }
+
+]
