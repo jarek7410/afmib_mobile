@@ -114,7 +114,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
     if (codef.length > 1) {
       fun?.focus();
       setCod(codef.split("")[0]);
-      setCodeNext ? setCodeNext(codef.split("")[1]) : undefined;
+      setCodeNext ? setCodeNext(codef.slice(1)) : undefined;
       return setCod(codef.split("")[0]);
     } else {
       return codef;
@@ -132,7 +132,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
         justifyContent: "center",
         alignItems: "center",
       }}>
-      {cameraIsActive && device && (
+      {cameraIsActive && device && hasPermission && (
         <Camera
           style={{ width: 200, height: 200 }}
           device={device}
@@ -145,7 +145,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
           style={style.TextInput}
           placeholder={"#"}
           onChangeText={setCode1}
-          autoCapitalize={"none"}
+          autoCapitalize={"characters"}
           autoFocus={true}
           value={code1}
           ref={code1Input}
@@ -157,7 +157,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
           style={style.TextInput}
           placeholder={"#"}
           onChangeText={setCode2}
-          autoCapitalize={"none"}
+          autoCapitalize={"characters"}
           value={code2}
           ref={code2Input}
           blurOnSubmit={false}
@@ -168,7 +168,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
           style={style.TextInput}
           placeholder={"#"}
           onChangeText={setCode3}
-          autoCapitalize={"none"}
+          autoCapitalize={"characters"}
           value={code3}
           ref={code3Input}
           blurOnSubmit={false}
@@ -179,7 +179,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
           style={style.TextInput}
           placeholder={"#"}
           onChangeText={setCode4}
-          autoCapitalize={"none"}
+          autoCapitalize={"characters"}
           value={code4}
           ref={code4Input}
           blurOnSubmit={false}
@@ -190,7 +190,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
           style={style.TextInput}
           placeholder={"#"}
           onChangeText={setCode5}
-          autoCapitalize={"none"}
+          autoCapitalize={"characters"}
           value={code5}
           ref={code5Input}
           blurOnSubmit={false}
@@ -201,7 +201,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
           style={style.TextInput}
           placeholder={"#"}
           onChangeText={setCode6}
-          autoCapitalize={"none"}
+          autoCapitalize={"characters"}
           value={code6}
           ref={code6Input}
           blurOnSubmit={false}
@@ -212,7 +212,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
           style={style.TextInput}
           placeholder={"#"}
           onChangeText={setCode7}
-          autoCapitalize={"none"}
+          autoCapitalize={"characters"}
           value={code7}
           ref={code7Input}
           blurOnSubmit={false}
@@ -223,7 +223,7 @@ export const CodeJoinScreen = ({ navigation }: Props) => {
           style={style.TextInput}
           placeholder={"#"}
           onChangeText={setCode8}
-          autoCapitalize={"none"}
+          autoCapitalize={"characters"}
           value={code8}
           ref={code8Input}
           blurOnSubmit={true}

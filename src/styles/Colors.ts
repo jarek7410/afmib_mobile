@@ -6,6 +6,8 @@ export const Colors = {
   text: "#000000",
   primary: "rgba(112,152,105,0.73)",
   secondary: "#4cd137",
+  ready: "#78c800",
+  inProgress: "#ffcc00",
   shadow: "rgba(97,105,94,0.65)",
   Heart: "#b22222",
   Spade: "#000000",

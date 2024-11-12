@@ -153,6 +153,12 @@ export const SummaryScreen = ({ navigation, route }: Props) => {
           }}
         />
         <Button
+          title={t("tournamentProgress")}
+          onPress={() => {
+            navigation.navigate("TournamentProgress");
+          }}
+        />
+        <Button
           title={t("exitTournament")}
           onPress={() => {
             saveCodeJoin({ code: "" });

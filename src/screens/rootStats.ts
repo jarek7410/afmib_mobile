@@ -16,4 +16,5 @@ export type RootStackParamList = {
   UserSettings: undefined;
   PlayerNames: { movment: movementDTO };
   InputReceiveData: undefined;
+  TournamentProgress: undefined;
 };

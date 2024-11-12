@@ -1,16 +1,16 @@
-import { PairStat } from "../storage/dto.ts";
+import { PairStat, TableStat } from "../storage/dto.ts";
 import { getServerURL } from "../storage/login.ts";
-import { getCodeJoin, getPairNumber } from "../storage/tournament.ts";
-import { EventRegister } from "react-native-event-listeners";
+import { getCodeJoin } from "../storage/tournament.ts";
 
-export const GetCurrentRound = async (): Promise<PairStat> => {
+/**
+ * Deprecated????but now is reused
+ */
+export const getCurrentRoundTables = async (): Promise<[TableStat]> => {
   return await fetch(
     (await getServerURL()) +
       "api/view/tournament/" +
       (await getCodeJoin()) +
-      "/pair/" +
-      (await getPairNumber()) +
-      "/rounds",
+      "/table/rounds",
     {
       method: "GET",
       headers: {
@@ -26,7 +26,7 @@ export const GetCurrentRound = async (): Promise<PairStat> => {
       console.log("getCurrentRoung: response not ok");
       throw new Error("getPair failed: data grab");
     })
-    .then((respJson: PairStat) => {
+    .then((respJson: [TableStat]) => {
       console.log("getCurrentRoung", "Done.");
       return respJson;
     });

@@ -93,6 +93,14 @@ export interface settings {
   defaultSector: number;
   helloMessage: string;
 }
+export interface TableStat {
+  Sector: number;
+  Table: number;
+  Round: number;
+  BoardsNotPlayed: string[];
+  BoardsPlayed: string[];
+  BoardsAll: string[];
+}
 export interface PairStat {
   Pair: number;
   Round: number;

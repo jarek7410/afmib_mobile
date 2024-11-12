@@ -1,11 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../rootStats.ts";
-import {
-  SafeAreaView,
-  ScrollView,
-  Vibration,
-  View,
-} from "react-native";
+import { SafeAreaView, ScrollView, Vibration, View } from "react-native";
 import Button from "../../components/Button";
 import React, { useEffect, useState } from "react";
 import { movementDTO, PairStat } from "../../storage/dto.ts";
@@ -194,7 +189,7 @@ export const InputReceiveData = ({ navigation }: Props) => {
             <Text>{t("board")}:</Text>
           </View>
           <View style={style.rowCare}>
-            {pairStat.BoardsNotPlayed.map((b, i) => {
+            {pairStat.BoardsNotPlayed.sort().map((b, i) => {
               return (
                 <RadionButton
                   key={i}

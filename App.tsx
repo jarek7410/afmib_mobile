@@ -25,6 +25,7 @@ import { LoginScreen, RegisterScreen } from "./src/screens/befor_login";
 import i18next from "i18next";
 import { getLangue } from "./src/storage/langue.ts";
 import { InputReceiveData } from "./src/screens/turnament/InputReceiveData.tsx";
+import { TournamentProgressScreen } from "./src/screens/turnament/TournamentProgressScreen.tsx";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -107,6 +108,10 @@ function App() {
               <Stack.Screen
                 name={"InputReceiveData"}
                 component={InputReceiveData}
+              />
+              <Stack.Screen
+                name={"TournamentProgress"}
+                component={TournamentProgressScreen}
               />
             </Stack.Group>
           )}

@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { codeWithDate, messageForHistory, messageWS } from "./dto.ts";
+import { codeWithDate, messageForHistory, messageWS, tableJoinDTO } from "./dto.ts";
 import { getLoginData } from "./login.ts";
 import { getCodeJoin } from "./tournament.ts";
 
@@ -18,6 +18,15 @@ export const addCodeToHistory = async (code: string) => {
   const codes = await getCodeHistoryWithDates();
   const date = new Date();
   const cwd: codeWithDate = { code, date: date };
+  const index = codes.findIndex(c => c.code === code);
+  if (index !== -1) {
+    codes[index] = cwd;
+    await AsyncStorage.setItem(
+      name + "@codeHistory",
+      JSON.stringify([...codes]),
+    );
+    return;
+  }
   await AsyncStorage.setItem(
     name + "@codeHistory",
     JSON.stringify([...codes, cwd]),
@@ -86,4 +95,10 @@ export const addMessageToHistory = async (message: messageWS) => {
     name + "@" + (await getCodeJoin()) + "@messageHistory",
     JSON.stringify([...messages, cwd]),
   );
+};
+export const getTableJoin = async (
+  code: codeWithDate,
+): Promise<tableJoinDTO | null> => {
+  const tableJoin = await AsyncStorage.getItem(code.code + "@tableJoin");
+  return tableJoin != null ? JSON.parse(tableJoin) : null;
 };

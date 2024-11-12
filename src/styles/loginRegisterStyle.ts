@@ -13,7 +13,7 @@ export const style = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   centralizeContainer: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.background,
@@ -39,5 +39,12 @@ export const style = StyleSheet.create({
     backgroundColor: Colors.card,
     justifyContent: "center",
     margin: 5,
+  },
+  roundBox: {
+    height: 50,
+    width: 65,
+    // paddingRight: 15,
+    marginLeft: -10,
+    borderRadius: 7,
   },
 });
