@@ -82,8 +82,8 @@ android {
         applicationId "com.afmib"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "0.1.4"
+        versionCode 5
+        versionName "0.2.1"
     }
     signingConfigs {
         debug {
@@ -128,3 +128,4 @@ dependencies {
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+// apply plugin: 'com.google.gms.google-services'
